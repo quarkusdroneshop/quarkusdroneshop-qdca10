@@ -100,3 +100,14 @@ oc delete all --selector app=quarkus-cafe-barista
 ```
 
 oc run kafka-producer -ti --image=registry.access.redhat.com/amq7/amq-streams-kafka:1.1.0-kafka-2.1.1 --rm=true --restart=Never -- bin/kafka-console-producer.sh --broker-list cluster-name-kafka-bootstrap:9092 --topic my-topic
+
+## Packaging and running the application
+
+```
+export KAFKA_BOOTSTRAP_URLS=localhost:9092 
+./mvnw clean package -Pnative -Dquarkus.native.container-build=true
+docker build -f src/main/docker/Dockerfile.native -t <<DOCKER_HUB_ID>>/quarkuscoffeeshop-barista .
+docker run -i --network="host" -e KAFKA_BOOTSTRAP_URLS=${KAFKA_BOOTSTRAP_URLS} <<DOCKER_HUB_ID>>/quarkuscoffeeshop-barista:latest
+docker images -a | grep barista
+docker tag <<RESULT>> <<DOCKER_HUB_ID>>/quarkuscoffeeshop-barista:<<VERSION>>
+```
