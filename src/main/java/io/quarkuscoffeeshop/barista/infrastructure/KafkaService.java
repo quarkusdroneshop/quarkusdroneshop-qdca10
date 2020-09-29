@@ -12,8 +12,12 @@ import org.slf4j.LoggerFactory;
 
 import javax.enterprise.context.ApplicationScoped;
 import javax.inject.Inject;
+import javax.json.Json;
+import javax.json.JsonObject;
+import javax.json.JsonReader;
 import javax.json.bind.Jsonb;
 import javax.json.bind.JsonbBuilder;
+import java.io.StringReader;
 import java.util.Collection;
 import java.util.concurrent.CompletableFuture;
 import java.util.concurrent.CompletionStage;
@@ -37,15 +41,26 @@ public class KafkaService {
     @Incoming("orders-in")
     public CompletionStage<Void> handleOrderIn(Message message) {
 
-        logger.debug("\nBarista Order In Received: {}", message.getPayload());
-        final OrderInEvent orderIn = jsonb.fromJson((String) message.getPayload(), OrderInEvent.class);
-        if (orderIn.eventType.equals(EventType.BEVERAGE_ORDER_IN)) {
-            return barista.make(orderIn).thenApply(o -> {
-                return sendEvents(o);
-            }).thenRun(() -> {
-                message.ack();
-            });
-        } else {
+        logger.debug("message received: {}", message.getPayload());
+
+        String payload = (String) message.getPayload();
+        JsonReader jsonReader = Json.createReader(new StringReader(payload));
+        JsonObject jsonObject = jsonReader.readObject();
+
+        logger.debug("unmarshalled {}", jsonObject);
+
+        if (jsonObject.containsKey("eventType")) {
+            final OrderInEvent orderIn = jsonb.fromJson((String) message.getPayload(), OrderInEvent.class);
+            if (orderIn.eventType.equals(EventType.BEVERAGE_ORDER_IN)) {
+                return barista.make(orderIn).thenApply(o -> {
+                    return sendEvents(o);
+                }).thenRun(() -> {
+                    message.ack();
+                });
+            } else {
+                return message.ack();
+            }
+        }else {
             return message.ack();
         }
     }
