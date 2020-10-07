@@ -49,6 +49,7 @@ public class KafkaService {
 
         logger.debug("unmarshalled {}", jsonObject);
 
+        // filter our commands and kitchen events
         if (jsonObject.containsKey("eventType")) {
             final OrderInEvent orderIn = jsonb.fromJson((String) message.getPayload(), OrderInEvent.class);
             if (orderIn.eventType.equals(EventType.BEVERAGE_ORDER_IN)) {
