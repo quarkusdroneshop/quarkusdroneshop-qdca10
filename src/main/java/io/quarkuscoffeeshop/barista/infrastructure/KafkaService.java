@@ -1,8 +1,10 @@
 package io.quarkuscoffeeshop.barista.infrastructure;
 
-import io.quarkuscoffeeshop.domain.*;
-import io.quarkuscoffeeshop.barista.domain.Barista;
 import io.quarkus.runtime.annotations.RegisterForReflection;
+import io.quarkuscoffeeshop.barista.domain.Barista;
+import io.quarkuscoffeeshop.barista.domain.Event;
+import io.quarkuscoffeeshop.barista.domain.EventType;
+import io.quarkuscoffeeshop.barista.domain.OrderInEvent;
 import org.eclipse.microprofile.reactive.messaging.Channel;
 import org.eclipse.microprofile.reactive.messaging.Emitter;
 import org.eclipse.microprofile.reactive.messaging.Incoming;

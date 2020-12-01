@@ -2,15 +2,9 @@
 <project xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd" xmlns="http://maven.apache.org/POM/4.0.0"
          xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
   <modelVersion>4.0.0</modelVersion>
-  <parent>
-    <artifactId>quarkuscoffeeshop-parent</artifactId>
-    <groupId>io.quarkuscoffeeshop</groupId>
-    <version>4.1.0</version>
-    <relativePath>../quarkuscoffeeshop-parent</relativePath>
-  </parent>
   <groupId>io.quarkuscoffeeshop</groupId>
   <artifactId>quarkuscoffeeshop-barista</artifactId>
-  <version>4.1.0</version>
+  <version>4.2.0</version>
 
   <properties>
     <!-- generated -->
@@ -41,12 +35,6 @@
         <version>${quarkus.platform.version}</version>
         <type>pom</type>
         <scope>import</scope>
-      </dependency>
-      <!-- Application Domain -->
-      <dependency>
-        <groupId>io.quarkuscoffeeshop</groupId>
-        <artifactId>quarkuscoffeeshop-domain</artifactId>
-        <version>${coffeeshop-domain.version}</version>
       </dependency>
       <!-- Application Testing -->
       <dependency>
@@ -111,11 +99,6 @@
       <artifactId>awaitility</artifactId>
       <version>${awaitility.version}</version>
       <scope>test</scope>
-    </dependency>
-    <!-- Application Domain -->
-    <dependency>
-      <groupId>io.quarkuscoffeeshop</groupId>
-      <artifactId>quarkuscoffeeshop-domain</artifactId>
     </dependency>
     <!-- Testing -->
     <dependency>
