@@ -2,28 +2,17 @@ package io.quarkuscoffeeshop.barista.infrastructure;
 
 import io.quarkus.runtime.annotations.RegisterForReflection;
 import io.quarkuscoffeeshop.barista.domain.Barista;
-import io.quarkuscoffeeshop.barista.domain.Event;
-import io.quarkuscoffeeshop.barista.domain.EventType;
-import io.quarkuscoffeeshop.barista.domain.OrderInEvent;
+import io.quarkuscoffeeshop.barista.domain.EightySixException;
+import io.quarkuscoffeeshop.domain.valueobjects.OrderTicket;
 import org.eclipse.microprofile.reactive.messaging.Channel;
 import org.eclipse.microprofile.reactive.messaging.Emitter;
 import org.eclipse.microprofile.reactive.messaging.Incoming;
-import org.eclipse.microprofile.reactive.messaging.Message;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 import javax.enterprise.context.ApplicationScoped;
 import javax.inject.Inject;
-import javax.json.Json;
-import javax.json.JsonObject;
-import javax.json.JsonReader;
-import javax.json.bind.Jsonb;
-import javax.json.bind.JsonbBuilder;
-import java.io.StringReader;
-import java.util.Collection;
 import java.util.concurrent.CompletableFuture;
-import java.util.concurrent.CompletionStage;
-import java.util.stream.Collectors;
 
 @ApplicationScoped
 @RegisterForReflection
@@ -38,54 +27,28 @@ public class KafkaService {
     @Channel("orders-out")
     Emitter<String> orderUpEmitter;
 
-    private Jsonb jsonb = JsonbBuilder.create();
+    @Inject
+    @Channel("eighty-six")
+    Emitter<String> eightySixEmitter;
 
     @Incoming("orders-in")
-    public CompletionStage<Void> handleOrderIn(Message message) {
+    public CompletableFuture handleOrderIn(OrderTicket orderTicket) {
 
-        logger.debug("message received: {}", message.getPayload());
+        logger.debug("OrderTicket received: {}", orderTicket);
 
-        String payload = (String) message.getPayload();
-        JsonReader jsonReader = Json.createReader(new StringReader(payload));
-        JsonObject jsonObject = jsonReader.readObject();
-
-        logger.debug("unmarshalled {}", jsonObject);
-
-        // filter our commands and kitchen events
-        if (jsonObject.containsKey("eventType")) {
-            final OrderInEvent orderIn = jsonb.fromJson((String) message.getPayload(), OrderInEvent.class);
-            if (orderIn.eventType.equals(EventType.BEVERAGE_ORDER_IN)) {
-                return barista.make(orderIn).thenApply(o -> {
-                    return sendEvents(o);
-                }).thenRun(() -> {
-                    message.ack();
-                });
-            } else {
-                return message.ack();
-            }
-        }else {
-            return message.ack();
-        }
+        return CompletableFuture.supplyAsync(() -> {
+            return barista.make(orderTicket);
+        }).thenApply(orderUp -> {
+            logger.debug( "OrderUp: {}", orderUp);
+            orderUpEmitter.send(orderUp.toString());
+            return null;
+        })
+        .exceptionally(exception -> {
+            logger.debug( "EightySixException: {}", exception.getMessage());
+            ((EightySixException) exception).getItems().forEach(item -> {
+                eightySixEmitter.send(item.toString());
+            });
+            return null;
+        });
     }
-
-    CompletableFuture<Void> sendEvents(Collection<Event> events) {
-        logger.debug("{} events returned", events.size());
-        if (events.size() == 1) {
-            return sendEvent((Event) events.toArray()[0]);
-        }
-        return CompletableFuture.allOf(
-                events.stream().map(e -> {
-                    return sendEvent(e);
-                }).collect(Collectors.toList()).toArray(CompletableFuture[]::new))
-                .exceptionally(e -> {
-                    logger.error(e.getMessage());
-                    return null;
-                });
-    }
-
-    CompletableFuture<Void> sendEvent(final Event event) {
-        logger.debug("sending: {}", event.toString());
-        return orderUpEmitter.send(jsonb.toJson(event)).toCompletableFuture();
-    }
-
 }

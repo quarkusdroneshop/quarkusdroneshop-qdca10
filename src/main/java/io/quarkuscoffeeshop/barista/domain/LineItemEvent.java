@@ -1,6 +1,7 @@
 package io.quarkuscoffeeshop.barista.domain;
 
 import io.quarkus.runtime.annotations.RegisterForReflection;
+import io.quarkuscoffeeshop.domain.Item;
 
 import java.util.UUID;
 

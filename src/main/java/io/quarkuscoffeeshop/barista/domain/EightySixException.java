@@ -1,27 +1,31 @@
 package io.quarkuscoffeeshop.barista.domain;
 
 import io.quarkus.runtime.annotations.RegisterForReflection;
+import io.quarkuscoffeeshop.domain.Item;
 
+import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Collection;
+import java.util.List;
 
 /**
  * Thrown when an item is out of stock
  */
 @RegisterForReflection
-public class EightySixException extends Exception {
+public class EightySixException extends RuntimeException {
 
-    Item item;
+    List<Item> items;
 
-    public EightySixException(Item item) {
-        this.item = item;
+    public EightySixException(Item eightySixedItem) {
+
+        this.items = new ArrayList(){{ add(eightySixedItem); }};
     }
 
-    public Item getItem() {
-        return item;
+    public EightySixException(List<Item> eightySixedItems) {
+        this.items = eightySixedItems;
     }
 
-    public Collection<EightySixEvent> getEvents() {
-        return Arrays.asList(new EightySixEvent(item));
+    public List<Item> getItems() {
+        return items;
     }
 }

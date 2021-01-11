@@ -1,5 +1,8 @@
 package io.quarkuscoffeeshop.barista.domain;
 
+import io.quarkuscoffeeshop.domain.Item;
+import io.quarkuscoffeeshop.domain.valueobjects.OrderTicket;
+import io.quarkuscoffeeshop.domain.valueobjects.TicketUp;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -8,9 +11,8 @@ import javax.enterprise.context.ApplicationScoped;
 import javax.inject.Inject;
 import java.io.IOException;
 import java.net.InetAddress;
-import java.util.Arrays;
-import java.util.Collection;
-import java.util.concurrent.CompletableFuture;
+import java.time.Instant;
+import java.util.ArrayList;
 
 @ApplicationScoped
 public class Barista {
@@ -32,45 +34,58 @@ public class Barista {
         }
     }
 
-    public CompletableFuture<Collection<Event>> make(final OrderInEvent orderInEvent) {
+    public TicketUp make(final OrderTicket orderTicket){
 
-        logger.debug("making: {}" + orderInEvent.item);
+        logger.debug("making: {}" + orderTicket.getItem());
 
-        return CompletableFuture.supplyAsync(() -> {
-
-            switch (orderInEvent.item) {
+            int delay;
+            switch (orderTicket.getItem()) {
                 case COFFEE_BLACK:
-                    return prepare(orderInEvent, 5);
+                    delay = 5;
+                    break;
                 case COFFEE_WITH_ROOM:
-                    return prepare(orderInEvent, 5);
+                    delay = 5;
+                    break;
                 case ESPRESSO:
-                    return prepare(orderInEvent, 7);
+                    delay = 7;
+                    break;
                 case ESPRESSO_DOUBLE:
-                    return prepare(orderInEvent, 7);
+                    delay = 7;
+                    break;
                 case CAPPUCCINO:
-                    return prepare(orderInEvent, 9);
+                    delay = 10;
+                    break;
                 default:
-                    return prepare(orderInEvent, 11);
-            }
-        });
+                    delay = 3;
+                    break;
+            };
+            return prepare(orderTicket, delay);
     }
 
-    private Collection<Event> prepare(final OrderInEvent orderInEvent, int seconds) {
+    /*
+        Delay for the specified time and then return the completed TicketUp
+        @throws RuntimeException for 86'd items
+     */
+    private TicketUp prepare(final OrderTicket orderTicket, int seconds) {
 
         // decrement the item in inventory
         try {
-            inventory.decrementItem(orderInEvent.item);
+
+            inventory.decrementItem(orderTicket.getItem());
+            logger.debug("inventory decremented 1 {}", orderTicket.getItem());
         } catch (EightySixException e) {
-            e.printStackTrace();
-            logger.debug(orderInEvent.item + " is 86'd");
-            return Arrays.asList(new EightySixEvent(orderInEvent.item));
+
+            logger.debug(orderTicket.getItem() + " is 86'd");
+            throw new EightySixException(orderTicket.getItem());
         } catch (EightySixCoffeeException e) {
-            // 86 both coffee items
-            e.printStackTrace();
+
             logger.debug("coffee is 86'd");
-            return Arrays.asList(
-                    new EightySixEvent(Item.COFFEE_WITH_ROOM),
-                    new EightySixEvent(Item.COFFEE_BLACK)
+            // 86 both coffee items
+            throw new EightySixException(
+                    new ArrayList<Item>(){{
+                        add(Item.COFFEE_BLACK);
+                        add(Item.COFFEE_WITH_ROOM);
+                    }}
             );
         }
 
@@ -82,13 +97,13 @@ public class Barista {
         }
 
         // return the completed drink
-        return Arrays.asList(new OrderUpEvent(
-                EventType.BEVERAGE_ORDER_UP,
-                orderInEvent.orderId,
-                orderInEvent.name,
-                orderInEvent.item,
-                orderInEvent.itemId,
-                madeBy));
+        return new TicketUp(
+                orderTicket.getOrderId(),
+                orderTicket.getLineItemId(),
+                orderTicket.getItem(),
+                orderTicket.getName(),
+                Instant.now(),
+                madeBy);
     }
 
     public void restockItem(Item item) {
