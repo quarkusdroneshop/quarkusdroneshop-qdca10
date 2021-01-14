@@ -4,6 +4,7 @@ import io.quarkus.runtime.annotations.RegisterForReflection;
 import io.quarkuscoffeeshop.barista.domain.Barista;
 import io.quarkuscoffeeshop.barista.domain.EightySixException;
 import io.quarkuscoffeeshop.domain.valueobjects.OrderTicket;
+import io.quarkuscoffeeshop.domain.valueobjects.TicketUp;
 import org.eclipse.microprofile.reactive.messaging.Channel;
 import org.eclipse.microprofile.reactive.messaging.Emitter;
 import org.eclipse.microprofile.reactive.messaging.Incoming;
@@ -25,7 +26,7 @@ public class KafkaService {
 
     @Inject
     @Channel("orders-out")
-    Emitter<String> orderUpEmitter;
+    Emitter<TicketUp> orderUpEmitter;
 
     @Inject
     @Channel("eighty-six")
@@ -40,7 +41,7 @@ public class KafkaService {
             return barista.make(orderTicket);
         }).thenApply(orderUp -> {
             logger.debug( "OrderUp: {}", orderUp);
-            orderUpEmitter.send(orderUp.toString());
+            orderUpEmitter.send(orderUp);
             return null;
         })
         .exceptionally(exception -> {
