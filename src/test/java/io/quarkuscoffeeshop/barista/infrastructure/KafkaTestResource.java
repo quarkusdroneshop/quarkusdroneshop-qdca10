@@ -1,28 +1,29 @@
 package io.quarkuscoffeeshop.barista.infrastructure;
 
 import java.util.Collections;
+import java.util.HashMap;
 import java.util.Map;
 
+import io.smallrye.reactive.messaging.connectors.InMemoryConnector;
 import org.testcontainers.containers.KafkaContainer;
 
 import io.quarkus.test.common.QuarkusTestResourceLifecycleManager;
 
 public class KafkaTestResource implements QuarkusTestResourceLifecycleManager {
 
-    final KafkaContainer KAFKA = new KafkaContainer();
-
     @Override
     public Map<String, String> start() {
-        KafkaContainer KAFKA = new KafkaContainer();
-        KAFKA.start();
-        System.setProperty("KAFKA_BOOTSTRAP_URLS", KAFKA.getBootstrapServers());
-        return Collections.emptyMap();
+        Map<String, String> env = new HashMap<>();
+        Map<String, String> props1 = InMemoryConnector.switchIncomingChannelsToInMemory("orders-in");
+        Map<String, String> props2 = InMemoryConnector.switchOutgoingChannelsToInMemory("orders-out");
+        env.putAll(props1);
+        env.putAll(props2);
+        return env;
     }
 
     @Override
     public void stop() {
-        System.clearProperty("KAFKA_BOOTSTRAP_URLS");
-        KAFKA.close();
+        InMemoryConnector.clear();
     }
 
 }
