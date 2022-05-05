@@ -2,6 +2,8 @@ package io.quarkuscoffeeshop.barista.domain;
 
 import io.quarkuscoffeeshop.domain.*;
 import io.quarkus.test.junit.QuarkusTest;
+import io.quarkuscoffeeshop.domain.valueobjects.OrderTicket;
+import io.quarkuscoffeeshop.domain.valueobjects.TicketUp;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
@@ -33,10 +35,23 @@ public class BaristaTest {
     @Test
     public void testBlackCoffeeOrder() throws ExecutionException, InterruptedException {
 
-        OrderInEvent orderInEvent = new OrderInEvent(EventType.BEVERAGE_ORDER_IN, UUID.randomUUID().toString(), UUID.randomUUID().toString(), "Jeremy", Item.COFFEE_BLACK);
-//        Collection<Event> events = barista.make(orderInEvent).get();
+        OrderTicket orderTicket = new OrderTicket(
+                UUID.randomUUID().toString(),
+                UUID.randomUUID().toString(),
+                Item.COFFEE_BLACK,
+                "Lemmy"
+        );
+
+        TicketUp ticketUp = barista.make(orderTicket);
+
         await().atLeast(Duration.ofSeconds(5000));
-//        assertEquals(EventType.BEVERAGE_ORDER_UP, ((Event) (events.toArray()[0])).getEventType());
+
+        assertNotNull(ticketUp);
+        assertEquals(ticketUp.orderId, orderTicket.getOrderId());
+        assertEquals(ticketUp.lineItemId, orderTicket.getLineItemId());
+        assertEquals(ticketUp.item, orderTicket.getItem());
+        assertEquals(ticketUp.name, orderTicket.getName());
+
     }
 
 }
