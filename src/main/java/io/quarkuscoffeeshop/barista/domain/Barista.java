@@ -1,8 +1,9 @@
 package io.quarkuscoffeeshop.barista.domain;
 
 import io.quarkuscoffeeshop.domain.Item;
-import io.quarkuscoffeeshop.domain.valueobjects.OrderTicket;
-import io.quarkuscoffeeshop.domain.valueobjects.TicketUp;
+import io.quarkuscoffeeshop.domain.valueobjects.BaristaResult;
+import io.quarkuscoffeeshop.domain.valueobjects.OrderIn;
+import io.quarkuscoffeeshop.domain.valueobjects.OrderUp;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -12,17 +13,14 @@ import javax.inject.Inject;
 import java.io.IOException;
 import java.net.InetAddress;
 import java.time.Instant;
-import java.util.ArrayList;
 
 @ApplicationScoped
 public class Barista {
 
     static final Logger logger = LoggerFactory.getLogger(Barista.class);
-
-    private String madeBy;
-
     @Inject
     Inventory inventory;
+    private String madeBy;
 
     @PostConstruct
     void setHostName() {
@@ -34,77 +32,63 @@ public class Barista {
         }
     }
 
-    public TicketUp make(final OrderTicket orderTicket){
+    public BaristaResult make(final OrderIn orderIn) {
 
-        logger.debug("making: {}" + orderTicket.getItem());
+        logger.debug("making: {}" + orderIn.getItem());
 
-            int delay;
-            switch (orderTicket.getItem()) {
-                case COFFEE_BLACK:
-                    delay = 5;
-                    break;
-                case COFFEE_WITH_ROOM:
-                    delay = 5;
-                    break;
-                case ESPRESSO:
-                    delay = 7;
-                    break;
-                case ESPRESSO_DOUBLE:
-                    delay = 7;
-                    break;
-                case CAPPUCCINO:
-                    delay = 10;
-                    break;
-                default:
-                    delay = 3;
-                    break;
-            };
-            return prepare(orderTicket, delay);
-    }
+        if (inventory.decrementItem(orderIn.getItem())) {
 
-    /*
-        Delay for the specified time and then return the completed TicketUp
-        @throws RuntimeException for 86'd items
-     */
-    private TicketUp prepare(final OrderTicket orderTicket, int seconds) {
+            sleepyTimeTime(orderIn.getItem());
 
-        // decrement the item in inventory
-        try {
+            return new BaristaResult(new OrderUp(
+                    orderIn.getOrderId(),
+                    orderIn.getLineItemId(),
+                    orderIn.getItem(),
+                    orderIn.getName(),
+                    Instant.now(),
+                    madeBy));
+        } else {
 
-            inventory.decrementItem(orderTicket.getItem());
-            logger.debug("inventory decremented 1 {}", orderTicket.getItem());
-        } catch (EightySixException e) {
-
-            logger.debug(orderTicket.getItem() + " is 86'd");
-            throw new EightySixException(orderTicket.getItem());
-        } catch (EightySixCoffeeException e) {
-
-            logger.debug("coffee is 86'd");
-            // 86 both coffee items
-            throw new EightySixException(
-                    new ArrayList<Item>(){{
-                        add(Item.COFFEE_BLACK);
-                        add(Item.COFFEE_WITH_ROOM);
-                    }}
-            );
+            return new BaristaResult(new EightySixEvent(orderIn.getItem()));
         }
 
-        // model the barista's time making the drink
+    }
+
+    private void sleepyTimeTime(final Item item) {
+        int i = calculateDelay(item);
         try {
-            Thread.sleep(seconds * 1000);
+            Thread.sleep(i);
         } catch (InterruptedException e) {
             Thread.currentThread().interrupt();
         }
-
-        // return the completed drink
-        return new TicketUp(
-                orderTicket.getOrderId(),
-                orderTicket.getLineItemId(),
-                orderTicket.getItem(),
-                orderTicket.getName(),
-                Instant.now(),
-                madeBy);
     }
+
+    private int calculateDelay(final Item item) {
+        int delay;
+        switch (item) {
+            case COFFEE_BLACK:
+                delay = 5000;
+                break;
+            case COFFEE_WITH_ROOM:
+                delay = 5000;
+                break;
+            case ESPRESSO:
+                delay = 7000;
+                break;
+            case ESPRESSO_DOUBLE:
+                delay = 7000;
+                break;
+            case CAPPUCCINO:
+                delay = 10000;
+                break;
+            default:
+                delay = 3000;
+                break;
+        }
+        ;
+        return delay;
+    }
+
 
     public void restockItem(Item item) {
         inventory.restock(item);

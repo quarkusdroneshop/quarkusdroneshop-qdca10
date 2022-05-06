@@ -6,6 +6,8 @@ import org.junit.jupiter.api.MethodOrderer;
 import org.junit.jupiter.api.Order;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.TestMethodOrder;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 import javax.inject.Inject;
 import java.util.Map;
@@ -14,6 +16,8 @@ import static org.junit.Assert.*;
 
 @QuarkusTest @TestMethodOrder(MethodOrderer.OrderAnnotation.class)
 public class InventoryTest {
+
+    private static final Logger LOGGER = LoggerFactory.getLogger(InventoryTest.class);
 
     @Inject
     Inventory inventory;
@@ -24,7 +28,7 @@ public class InventoryTest {
         Map<Item, Integer> inStock = inventory.getStock();
         assertNotNull(inStock);
         inStock.forEach((k,v) -> {
-            System.out.println(k + " " + v);
+            LOGGER.info(k + " " + v);
         });
     }
 
@@ -32,13 +36,10 @@ public class InventoryTest {
     public void testDecrementCoffee() {
 
         Integer totalCoffee = inventory.getTotalCoffee();
-        try {
-            inventory.decrementItem(Item.COFFEE_WITH_ROOM);
-        } catch (EightySixCoffeeException | EightySixException e) {
-            // Items are initiated with a minimum value of 30
-            assertNull(e);
-        }
+        LOGGER.info("total coffee: {}", totalCoffee);
+        assertTrue(inventory.decrementItem(Item.COFFEE_WITH_ROOM));
         Integer updatedCoffee = inventory.getTotalCoffee();
+        LOGGER.info("total coffee after decrementing: {}", updatedCoffee);
         assertTrue(updatedCoffee == totalCoffee - 1);
     }
 
@@ -47,12 +48,8 @@ public class InventoryTest {
 
         Integer totalCoffee = inventory.getTotalCoffee();
         for (int i = 0; i < totalCoffee; i++) {
-            try {
-                inventory.decrementItem(Item.COFFEE_BLACK);
-            } catch (Exception e) {
-                assertEquals(EightySixCoffeeException.class, e.getClass());
-                assertEquals(totalCoffee, Integer.valueOf(i));
-            }
+            assertTrue(inventory.decrementItem(Item.COFFEE_BLACK));
         }
+        assertFalse(inventory.decrementItem(Item.COFFEE_BLACK));
     }
 }

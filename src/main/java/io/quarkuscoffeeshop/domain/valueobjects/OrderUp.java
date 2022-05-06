@@ -7,7 +7,7 @@ import java.time.Instant;
 import java.util.StringJoiner;
 
 @RegisterForReflection
-public class TicketUp {
+public class OrderUp {
 
     public final String orderId;
 
@@ -21,7 +21,7 @@ public class TicketUp {
 
     public final String madeBy;
 
-    public TicketUp(String orderId, String lineItemId, Item item, String name, Instant timestamp, String madeBy) {
+    public OrderUp(String orderId, String lineItemId, Item item, String name, Instant timestamp, String madeBy) {
         this.orderId = orderId;
         this.lineItemId = lineItemId;
         this.item = item;
@@ -32,7 +32,7 @@ public class TicketUp {
 
     @Override
     public String toString() {
-        return new StringJoiner(", ", TicketUp.class.getSimpleName() + "[", "]")
+        return new StringJoiner(", ", OrderUp.class.getSimpleName() + "[", "]")
                 .add("orderId='" + orderId + "'")
                 .add("lineItemId='" + lineItemId + "'")
                 .add("item=" + item)
@@ -47,14 +47,14 @@ public class TicketUp {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
 
-        TicketUp ticketUp = (TicketUp) o;
+        OrderUp orderUp = (OrderUp) o;
 
-        if (orderId != null ? !orderId.equals(ticketUp.orderId) : ticketUp.orderId != null) return false;
-        if (lineItemId != null ? !lineItemId.equals(ticketUp.lineItemId) : ticketUp.lineItemId != null) return false;
-        if (item != ticketUp.item) return false;
-        if (name != null ? !name.equals(ticketUp.name) : ticketUp.name != null) return false;
-        if (timestamp != null ? !timestamp.equals(ticketUp.timestamp) : ticketUp.timestamp != null) return false;
-        return madeBy != null ? madeBy.equals(ticketUp.madeBy) : ticketUp.madeBy == null;
+        if (orderId != null ? !orderId.equals(orderUp.orderId) : orderUp.orderId != null) return false;
+        if (lineItemId != null ? !lineItemId.equals(orderUp.lineItemId) : orderUp.lineItemId != null) return false;
+        if (item != orderUp.item) return false;
+        if (name != null ? !name.equals(orderUp.name) : orderUp.name != null) return false;
+        if (timestamp != null ? !timestamp.equals(orderUp.timestamp) : orderUp.timestamp != null) return false;
+        return madeBy != null ? madeBy.equals(orderUp.madeBy) : orderUp.madeBy == null;
     }
 
     @Override

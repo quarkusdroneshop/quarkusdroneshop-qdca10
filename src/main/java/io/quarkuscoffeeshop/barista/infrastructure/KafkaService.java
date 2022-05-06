@@ -2,9 +2,8 @@ package io.quarkuscoffeeshop.barista.infrastructure;
 
 import io.quarkus.runtime.annotations.RegisterForReflection;
 import io.quarkuscoffeeshop.barista.domain.Barista;
-import io.quarkuscoffeeshop.barista.domain.EightySixException;
-import io.quarkuscoffeeshop.domain.valueobjects.OrderTicket;
-import io.quarkuscoffeeshop.domain.valueobjects.TicketUp;
+import io.quarkuscoffeeshop.domain.valueobjects.OrderIn;
+import io.quarkuscoffeeshop.domain.valueobjects.OrderUp;
 import org.eclipse.microprofile.reactive.messaging.Channel;
 import org.eclipse.microprofile.reactive.messaging.Emitter;
 import org.eclipse.microprofile.reactive.messaging.Incoming;
@@ -26,29 +25,31 @@ public class KafkaService {
 
     @Inject
     @Channel("orders-out")
-    Emitter<TicketUp> orderUpEmitter;
+    Emitter<OrderUp> orderUpEmitter;
 
     @Inject
     @Channel("eighty-six")
     Emitter<String> eightySixEmitter;
 
     @Incoming("orders-in")
-    public CompletableFuture handleOrderIn(OrderTicket orderTicket) {
+    public CompletableFuture onOrderIn(final OrderIn orderIn) {
 
-        logger.debug("OrderTicket received: {}", orderTicket);
+        logger.debug("OrderTicket received: {}", orderIn);
 
         return CompletableFuture.supplyAsync(() -> {
-            return barista.make(orderTicket);
-        }).thenApply(orderUp -> {
-            logger.debug( "OrderUp: {}", orderUp);
-            orderUpEmitter.send(orderUp);
-            return null;
-        })
-        .exceptionally(exception -> {
-            logger.debug( "EightySixException: {}", exception.getMessage());
-            ((EightySixException) exception).getItems().forEach(item -> {
-                eightySixEmitter.send(item.toString());
-            });
+
+            return barista.make(orderIn);
+        }).thenApply(baristaResult -> {
+
+            if (baristaResult.isEightySixed()) {
+
+                eightySixEmitter.send(orderIn.getItem().toString());
+            }else{
+
+                logger.debug( "OrderUp: {}", baristaResult.getOrderUp());
+                orderUpEmitter.send(baristaResult.getOrderUp());
+            }
+
             return null;
         });
     }

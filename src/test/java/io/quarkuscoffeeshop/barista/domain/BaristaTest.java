@@ -1,9 +1,11 @@
 package io.quarkuscoffeeshop.barista.domain;
 
+import io.quarkuscoffeeshop.barista.TestUtil;
 import io.quarkuscoffeeshop.domain.*;
 import io.quarkus.test.junit.QuarkusTest;
-import io.quarkuscoffeeshop.domain.valueobjects.OrderTicket;
-import io.quarkuscoffeeshop.domain.valueobjects.TicketUp;
+import io.quarkuscoffeeshop.domain.valueobjects.BaristaResult;
+import io.quarkuscoffeeshop.domain.valueobjects.OrderIn;
+import io.quarkuscoffeeshop.domain.valueobjects.OrderUp;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
@@ -11,8 +13,6 @@ import javax.inject.Inject;
 import javax.json.bind.Jsonb;
 import javax.json.bind.JsonbBuilder;
 import java.time.Duration;
-import java.util.Collection;
-import java.util.UUID;
 import java.util.concurrent.ExecutionException;
 
 import static org.awaitility.Awaitility.await;
@@ -35,23 +35,21 @@ public class BaristaTest {
     @Test
     public void testBlackCoffeeOrder() throws ExecutionException, InterruptedException {
 
-        OrderTicket orderTicket = new OrderTicket(
-                UUID.randomUUID().toString(),
-                UUID.randomUUID().toString(),
-                Item.COFFEE_BLACK,
-                "Lemmy"
-        );
+        OrderIn orderIn = TestUtil.getOrderTicket();
 
-        TicketUp ticketUp = barista.make(orderTicket);
+        BaristaResult baristaResult = barista.make(orderIn);
+
+        OrderUp orderUp = baristaResult.getOrderUp();
 
         await().atLeast(Duration.ofSeconds(5000));
 
-        assertNotNull(ticketUp);
-        assertEquals(ticketUp.orderId, orderTicket.getOrderId());
-        assertEquals(ticketUp.lineItemId, orderTicket.getLineItemId());
-        assertEquals(ticketUp.item, orderTicket.getItem());
-        assertEquals(ticketUp.name, orderTicket.getName());
+        assertNotNull(orderUp);
+        assertEquals(orderUp.orderId, orderIn.getOrderId());
+        assertEquals(orderUp.lineItemId, orderIn.getLineItemId());
+        assertEquals(orderUp.item, orderIn.getItem());
+        assertEquals(orderUp.name, orderIn.getName());
 
     }
+
 
 }
