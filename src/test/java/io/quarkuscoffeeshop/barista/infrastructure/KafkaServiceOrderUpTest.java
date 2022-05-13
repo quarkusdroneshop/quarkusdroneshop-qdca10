@@ -8,6 +8,7 @@ import io.quarkuscoffeeshop.domain.valueobjects.OrderUp;
 import io.smallrye.reactive.messaging.connectors.InMemoryConnector;
 import io.smallrye.reactive.messaging.connectors.InMemorySink;
 import io.smallrye.reactive.messaging.connectors.InMemorySource;
+import org.eclipse.microprofile.reactive.messaging.Message;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.slf4j.Logger;
@@ -60,15 +61,14 @@ public class KafkaServiceOrderUpTest {
             Thread.currentThread().interrupt();
         }
 
-        List<?> ordersUp = ordersOut.received();
+        List<? extends Message<OrderUp>> ordersUp = ordersOut.received();
         assertNotNull(ordersUp);
         assertEquals(1, ordersUp.size());
-        LOGGER.debug(ordersUp.get(0).toString());
-//        TicketUp ticketUp = (TicketUp) ordersUp.get(0);
-//        assertNotNull(ticketUp);
-//        assertEquals(ticketUp.orderId, orderTicket.getOrderId());
-//        assertEquals(ticketUp.lineItemId, orderTicket.getLineItemId());
-//        assertEquals(ticketUp.item, orderTicket.getItem());
-//        assertEquals(ticketUp.name, orderTicket.getName());
+        OrderUp orderUp = ordersUp.get(0).getPayload();
+        assertNotNull(orderUp);
+        assertEquals(orderUp.orderId, orderIn.getOrderId());
+        assertEquals(orderUp.lineItemId, orderIn.getLineItemId());
+        assertEquals(orderUp.item, orderIn.getItem());
+        assertEquals(orderUp.name, orderIn.getName());
     }
 }
