@@ -1,11 +1,11 @@
 package io.quarkuscoffeeshop.barista.infrastructure;
 
 import io.quarkus.kafka.client.serialization.ObjectMapperDeserializer;
-import io.quarkuscoffeeshop.domain.valueobjects.OrderTicket;
+import io.quarkuscoffeeshop.domain.valueobjects.OrderIn;
 
-public class OrderTicketDeserializer extends ObjectMapperDeserializer<OrderTicket> {
+public class OrderTicketDeserializer extends ObjectMapperDeserializer<OrderIn> {
 
     public OrderTicketDeserializer() {
-        super(OrderTicket.class);
+        super(OrderIn.class);
     }
 }

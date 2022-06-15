@@ -14,9 +14,8 @@ import java.util.stream.Stream;
 @ApplicationScoped
 public class Inventory {
 
-    Logger logger = LoggerFactory.getLogger(Inventory.class.getName());
-
     static Map<Item, Integer> stock;
+    Logger LOGGER = LoggerFactory.getLogger(Inventory.class.getName());
 
     public Inventory() {
         super();
@@ -28,11 +27,11 @@ public class Inventory {
     @PostConstruct
     private void createStock() {
         stock = new HashMap<>();
-        Stream.of(Item.values()).forEach(v ->{
-            stock.put(v, ThreadLocalRandom.current().nextInt(55,99));
+        Stream.of(Item.values()).forEach(v -> {
+            stock.put(v, ThreadLocalRandom.current().nextInt(55, 99));
         });
         stock.entrySet().stream().forEach(entrySet -> {
-            logger.debug(entrySet.getKey() + " " + entrySet.getValue());
+            LOGGER.debug(entrySet.getKey() + " " + entrySet.getValue());
         });
 
         // Account for coffee
@@ -42,23 +41,21 @@ public class Inventory {
         stock.put(Item.COFFEE_BLACK, totalCoffee);
     }
 
-    public void decrementItem(Item item) throws EightySixException, EightySixCoffeeException {
-        if (item.equals(Item.COFFEE_BLACK) || item.equals(Item.COFFEE_WITH_ROOM)) {
-            decrementCoffee();
-        }else{
-            Integer currentValue = stock.get(item);
-            if(currentValue <= 0) throw new EightySixException(item);
-            stock.replace(item, currentValue - 1);
-        }
-    }
+    public boolean decrementItem(Item item) {
 
-    /*
-        COFFEE_BLACK and COFFEE_WITH_ROOM are simply tracked as COFFEE_BLACK
-     */
-    private static void decrementCoffee() throws EightySixCoffeeException {
-        Integer currentValue = stock.get(Item.COFFEE_BLACK);
-        if(currentValue <= 0) throw new EightySixCoffeeException();
-        stock.replace(Item.COFFEE_BLACK, currentValue - 1);
+        LOGGER.debug("decrementing {}", item);
+
+        if (item == Item.COFFEE_WITH_ROOM) item = Item.COFFEE_BLACK;
+
+        Integer itemCount = stock.get(item);
+        LOGGER.debug("current inventory for {} is {}", item, itemCount);
+
+        if (itemCount <= 0) return false;
+
+        itemCount--;
+        stock.replace(item, itemCount);
+        LOGGER.debug("updated inventory for {} is {}", item, stock.get(item));
+        return true;
     }
 
     public Map<Item, Integer> getStock() {
@@ -70,6 +67,6 @@ public class Inventory {
     }
 
     public void restock(Item item) {
-        stock.put(item, ThreadLocalRandom.current().nextInt(55,99));
+        stock.put(item, ThreadLocalRandom.current().nextInt(55, 99));
     }
 }

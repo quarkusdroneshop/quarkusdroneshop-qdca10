@@ -1,7 +1,11 @@
 package io.quarkuscoffeeshop.barista.domain;
 
+import io.quarkuscoffeeshop.barista.TestUtil;
 import io.quarkuscoffeeshop.domain.*;
 import io.quarkus.test.junit.QuarkusTest;
+import io.quarkuscoffeeshop.domain.valueobjects.BaristaResult;
+import io.quarkuscoffeeshop.domain.valueobjects.OrderIn;
+import io.quarkuscoffeeshop.domain.valueobjects.OrderUp;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
@@ -9,8 +13,6 @@ import javax.inject.Inject;
 import javax.json.bind.Jsonb;
 import javax.json.bind.JsonbBuilder;
 import java.time.Duration;
-import java.util.Collection;
-import java.util.UUID;
 import java.util.concurrent.ExecutionException;
 
 import static org.awaitility.Awaitility.await;
@@ -33,10 +35,21 @@ public class BaristaTest {
     @Test
     public void testBlackCoffeeOrder() throws ExecutionException, InterruptedException {
 
-        OrderInEvent orderInEvent = new OrderInEvent(EventType.BEVERAGE_ORDER_IN, UUID.randomUUID().toString(), UUID.randomUUID().toString(), "Jeremy", Item.COFFEE_BLACK);
-//        Collection<Event> events = barista.make(orderInEvent).get();
+        OrderIn orderIn = TestUtil.getOrderTicket();
+
+        BaristaResult baristaResult = barista.make(orderIn);
+
+        OrderUp orderUp = baristaResult.getOrderUp();
+
         await().atLeast(Duration.ofSeconds(5000));
-//        assertEquals(EventType.BEVERAGE_ORDER_UP, ((Event) (events.toArray()[0])).getEventType());
+
+        assertNotNull(orderUp);
+        assertEquals(orderUp.orderId, orderIn.getOrderId());
+        assertEquals(orderUp.lineItemId, orderIn.getLineItemId());
+        assertEquals(orderUp.item, orderIn.getItem());
+        assertEquals(orderUp.name, orderIn.getName());
+
     }
+
 
 }
