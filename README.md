@@ -11,8 +11,8 @@ This project uses Quarkus, the Supersonic Subatomic Java Framework.  If you want
 This project requires Kafka.  The quarkuscoffeeshop-support project contains a Docker compose file that will start Kafka.
 
 ```
-https://github.com/quarkuscoffeeshop/quarkuscoffeeshop-support.git
-https://github.com/quarkuscoffeeshop/quarkuscoffeeshop-barista.git
+git clone https://github.com/quarkuscoffeeshop/quarkuscoffeeshop-support.git
+git clone https://github.com/quarkuscoffeeshop/quarkuscoffeeshop-barista.git
 ```
 
 From inside the quarkuscoffeeshop-support folder run:
