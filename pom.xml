@@ -25,6 +25,7 @@
     <testcontainers.version>1.15.0-rc2</testcontainers.version>
     <kafka-clients.version>2.6.0</kafka-clients.version>
     <coffeeshop-testutils.version>4.0.0</coffeeshop-testutils.version>
+    <quarkus.package.type>fast-jar</quarkus.package.type>
   </properties>
 
   <dependencyManagement>
@@ -173,4 +174,19 @@
       </plugin>
     </plugins>
   </build>
+  <profiles>
+    <profile>
+      <id>native</id>
+      <activation>
+        <property>
+          <name>native</name>
+        </property>
+      </activation>
+      <build>
+      </build>
+      <properties>
+        <quarkus.package.type>native</quarkus.package.type>
+      </properties>
+    </profile>
+  </profiles>
 </project>
