@@ -23,7 +23,7 @@
     <awaitility.version>4.0.2</awaitility.version>
     <failsafe-plugin.version>3.0.0-M4</failsafe-plugin.version>
     <testcontainers.version>1.15.0-rc2</testcontainers.version>
-    <kafka-clients.version>2.6.0</kafka-clients.version>
+    <kafka-clients.version>3.9.0</kafka-clients.version>
     <coffeeshop-testutils.version>4.0.0</coffeeshop-testutils.version>
     <quarkus.package.type>fast-jar</quarkus.package.type>
   </properties>
