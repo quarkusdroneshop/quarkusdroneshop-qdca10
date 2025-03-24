@@ -10,7 +10,7 @@
     <coffeeshop-testutils.version>4.0.0</coffeeshop-testutils.version>
     <compiler-plugin.version>3.8.1</compiler-plugin.version>
     <failsafe-plugin.version>3.0.0-M4</failsafe-plugin.version>
-    <kafka-clients.version>3.9.0</kafka-clients.version>
+    <kafka-clients.version>2.8.1</kafka-clients.version>
     <maven.compiler.parameters>true</maven.compiler.parameters>
     <maven.compiler.source>11</maven.compiler.source>
     <maven.compiler.target>11</maven.compiler.target>
