@@ -31,14 +31,19 @@ LABEL io.openshift.s2i.scripts-url=image:///usr/libexec/s2i \
 # 環境変数の設定
 ENV HOME=/deployments
 ENV XDG_DATA_HOME=${HOME}/.local
+ENV XDG_CACHE_HOME=${HOME}/.cache
+ENV XDG_CONFIG_HOME=${HOME}/.config
 
 # 必要なディレクトリを作成し、適切な権限を付与
-RUN mkdir -p ${HOME} ${XDG_DATA_HOME} && \
+RUN mkdir -p ${HOME} ${XDG_DATA_HOME} ${XDG_CACHE_HOME} ${XDG_CONFIG_HOME} && \
     chown -R 1001:0 ${HOME} && \
     chmod -R g+rwX ${HOME}
 
 # OpenShift の非 root ユーザーで実行
 USER 1001
+
+# シェル環境の設定
+WORKDIR /deployments
 
 # S2I のビルドプロセス時に実行されるスクリプト
 COPY ./s2i/bin/ /usr/libexec/s2i
