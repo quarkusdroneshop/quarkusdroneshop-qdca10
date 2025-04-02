@@ -33,7 +33,7 @@ ENV XDG_DATA_HOME=${HOME}/.local
 RUN mkdir -p ${XDG_DATA_HOME} && chown -R 1001:0 ${XDG_DATA_HOME}
 
 # ディレクトリ作成と権限変更
-RUN mkdir -p ${HOME} && chown -R 1001:0 ${HOME}
+#RUN mkdir -p ${HOME} && chown -R 1001:0 ${HOME}
 
 # OpenShift の非 root ユーザーで実行
 USER 1001
