@@ -27,10 +27,15 @@ ARG JAVA_PACKAGE=java-11-openjdk-headless
 ARG RUN_JAVA_VERSION=1.3.8
 
 ENV LANG='ja_JP.UTF-8' LANGUAGE='ja_JP:ja'
+# HOMEディレクトリを設定
 ENV HOME=/deployments
-RUN mkdir -p ${HOME} && chown -R 1001:0 ${HOME}
-USER 1001
 WORKDIR ${HOME}
+
+# ディレクトリを作成し、適切な権限を設定
+RUN mkdir -p ${HOME} && chown -R 1001:0 ${HOME}
+
+# OpenShift で動作する非 root ユーザー
+USER 1001
 
 # Install java and the run-java script
 # Also set up permissions for user `1001`
