@@ -28,14 +28,14 @@ FROM registry.access.redhat.com/ubi8/openjdk-11
 LABEL io.openshift.s2i.scripts-url=image:///usr/libexec/s2i \
       io.openshift.s2i.destination=/tmp
 
-# S2I がアプリをコピーするためのディレクトリ
-# `/tmp/src` にソースコードが配置される
-WORKDIR /deployments
+# 環境変数の設定 (デフォルトのHOMEを変更)
+ENV HOME=/deployments
+WORKDIR ${HOME}
 
-# `/tmp/src` ディレクトリを作成し、適切な権限を付与
-RUN mkdir -p /tmp/src && chown -R 1001:0 /tmp
+# ディレクトリ作成と権限変更
+RUN mkdir -p ${HOME} && chown -R 1001:0 ${HOME}
 
-# OpenShift の非 root ユーザー (1001) に変更
+# OpenShift の非 root ユーザーで実行
 USER 1001
 
 # S2I のビルドプロセス時に実行されるスクリプト
