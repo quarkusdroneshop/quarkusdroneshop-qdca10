@@ -53,6 +53,6 @@ COPY target/quarkus-app/lib/* /deployments/lib/
 COPY target/*.jar /deployments/app.jar
 
 EXPOSE 8080
-USER 1001
+#USER 1001
 
 ENTRYPOINT [ "/deployments/run-java.sh" ]
