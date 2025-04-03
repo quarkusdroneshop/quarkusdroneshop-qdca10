@@ -36,7 +36,10 @@ ENV XDG_CONFIG_HOME=${HOME}/.config
 
 # 必要なディレクトリを作成し、適切な権限を付与
 RUN mkdir -p ${HOME} ${XDG_DATA_HOME} ${XDG_CACHE_HOME} ${XDG_CONFIG_HOME} && \
-    chmod -R g+rwX ${HOME}
+    chmod -R g+rwX ${HOME} && \
+    mkdir -p s2i/bin && \
+    touch s2i/bin/run && \
+    chmod +x s2i/bin/run
 
 # OpenShift の非 root ユーザーで実行
 USER 1001
