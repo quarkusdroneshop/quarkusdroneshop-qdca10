@@ -22,7 +22,13 @@
 #
 ###
 # RHEL8 ベースの OpenJDK 11 S2I イメージ
+# RHEL8 ベースの OpenJDK 11 S2I イメージ
 FROM registry.access.redhat.com/ubi8/openjdk-11
+
+# 必要なパッケージをインストールするためのパッケージマネージャをインストール
+RUN microdnf install dnf && \
+    dnf install -y origin-clients && \
+    dnf clean all
 
 # S2I のビルドスクリプトを定義
 LABEL io.openshift.s2i.scripts-url=image:///usr/libexec/s2i \
@@ -37,9 +43,6 @@ ENV XDG_CONFIG_HOME=${HOME}/.config
 # 必要なディレクトリを作成し、適切な権限を付与
 RUN mkdir -p ${HOME} ${XDG_DATA_HOME} ${XDG_CACHE_HOME} ${XDG_CONFIG_HOME} && \
     chmod -R g+rwX ${HOME} 
-
-# S2I がない場合に備えて手動インストール
-RUN dnf install -y origin-clients && dnf clean all
 
 # OpenShift の非 root ユーザーで実行
 USER 1001
