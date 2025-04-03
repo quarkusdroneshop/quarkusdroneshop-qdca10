@@ -30,7 +30,7 @@ ENV LANG='ja_JP.UTF-8' LANGUAGE='ja_JP:ja'
 
 # Install java and the run-java script
 # Also set up permissions for user `1001`
-RUN microdnf install curl ca-certificates ${JAVA_PACKAGE} \
+RUN microdnf install curl ca-certificates buildah ${JAVA_PACKAGE} \
     && microdnf update \
     && microdnf clean all \
     && mkdir /deployments \
