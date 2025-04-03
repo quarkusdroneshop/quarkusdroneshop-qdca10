@@ -39,7 +39,7 @@ RUN mkdir -p ${HOME} ${XDG_DATA_HOME} ${XDG_CACHE_HOME} ${XDG_CONFIG_HOME} && \
     chmod -R g+rwX ${HOME} 
 
 # S2I がない場合に備えて手動インストール
-RUN yum install -y origin-clients && yum clean all
+RUN dnf install -y origin-clients && dnf clean all
 
 # OpenShift の非 root ユーザーで実行
 USER 1001
