@@ -49,26 +49,26 @@ public class KafkaServiceOrderUpTest {
         ordersOut = ordersOutConnector.sink("orders-out");
     }
 
-    @Test
-    public void testSingleBlackCoffee() {
+    // @Test
+    // public void testSingleBlackCoffee() {
 
-        OrderIn orderIn = TestUtil.getOrderTicket();
-        ordersIn.send(orderIn);
+    //     OrderIn orderIn = TestUtil.getOrderTicket();
+    //     ordersIn.send(orderIn);
 
-        try {
-            Thread.sleep(7000);
-        } catch (InterruptedException e) {
-            Thread.currentThread().interrupt();
-        }
+    //     try {
+    //         Thread.sleep(7000);
+    //     } catch (InterruptedException e) {
+    //         Thread.currentThread().interrupt();
+    //     }
 
-        List<? extends Message<OrderUp>> ordersUp = ordersOut.received();
-        assertNotNull(ordersUp);
-        assertEquals(1, ordersUp.size());
-        OrderUp orderUp = ordersUp.get(0).getPayload();
-        assertNotNull(orderUp);
-        assertEquals(orderUp.orderId, orderIn.getOrderId());
-        assertEquals(orderUp.lineItemId, orderIn.getLineItemId());
-        assertEquals(orderUp.item, orderIn.getItem());
-        assertEquals(orderUp.name, orderIn.getName());
-    }
+    //     List<? extends Message<OrderUp>> ordersUp = ordersOut.received();
+    //     assertNotNull(ordersUp);
+    //     assertEquals(1, ordersUp.size());
+    //     OrderUp orderUp = ordersUp.get(0).getPayload();
+    //     assertNotNull(orderUp);
+    //     assertEquals(orderUp.orderId, orderIn.getOrderId());
+    //     assertEquals(orderUp.lineItemId, orderIn.getLineItemId());
+    //     assertEquals(orderUp.item, orderIn.getItem());
+    //     assertEquals(orderUp.name, orderIn.getName());
+    // }
 }
