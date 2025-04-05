@@ -1,0 +1,2 @@
+#!/bin/sh
+exec java -Dquarkus.profile=prod -jar /deployments/quarkus-run.jar
