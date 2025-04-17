@@ -46,7 +46,7 @@ public class KafkaServiceOrderUpTest {
     public void setUp(){
 
         ordersIn = ordersInConnector.source("orders-in");
-        ordersOut = ordersOutConnector.sink("orders-out");
+        ordersOut = ordersOutConnector.sink("orders-up");
     }
 
     // @Test

@@ -24,7 +24,7 @@ public class KafkaService {
     Barista barista;
 
     @Inject
-    @Channel("orders-out")
+    @Channel("orders-up")
     Emitter<OrderUp> orderUpEmitter;
 
     @Inject

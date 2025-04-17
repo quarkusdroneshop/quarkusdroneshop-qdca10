@@ -15,7 +15,7 @@ public class KafkaTestResource implements QuarkusTestResourceLifecycleManager {
     public Map<String, String> start() {
         Map<String, String> env = new HashMap<>();
         Map<String, String> props1 = InMemoryConnector.switchIncomingChannelsToInMemory("orders-in");
-        Map<String, String> props2 = InMemoryConnector.switchOutgoingChannelsToInMemory("orders-out");
+        Map<String, String> props2 = InMemoryConnector.switchOutgoingChannelsToInMemory("orders-up");
         env.putAll(props1);
         env.putAll(props2);
         return env;
