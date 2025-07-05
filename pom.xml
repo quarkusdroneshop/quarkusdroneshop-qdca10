@@ -3,7 +3,7 @@
     xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
   <modelVersion>4.0.0</modelVersion>
   <groupId>io.quarkusdroneshop</groupId>
-  <artifactId>quarkusdroneshop-barista</artifactId>
+  <artifactId>quarkusdroneshop-qdca10</artifactId>
   <version>5.1.0</version>
   <properties>
     <awaitility.version>4.0.2</awaitility.version>
@@ -34,8 +34,8 @@
         <scope>import</scope>
       </dependency>
       <dependency>
-        <groupId>io.quarkusdroneshop</groupId>
-        <artifactId>quarkusdroneshop-testutils</artifactId>
+        <groupId>io.quarkuscoffeeshop</groupId>
+        <artifactId>quarkuscoffeeshop-testutils</artifactId>
         <version>${droneshop-testutils.version}</version>
       </dependency>
       <dependency>
@@ -93,8 +93,8 @@
       <scope>test</scope>
     </dependency>
     <dependency>
-      <groupId>io.quarkusdroneshop</groupId>
-      <artifactId>quarkusdroneshop-testutils</artifactId>
+      <groupId>io.quarkuscoffeeshop</groupId>
+      <artifactId>quarkuscoffeeshop-testutils</artifactId>
       <scope>test</scope>
     </dependency>
     <dependency>

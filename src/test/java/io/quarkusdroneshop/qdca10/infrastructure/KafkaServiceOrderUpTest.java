@@ -1,8 +1,8 @@
-package io.quarkusdroneshop.barista.infrastructure;
+package io.quarkusdroneshop.qdca10.infrastructure;
 
 import io.quarkus.test.common.QuarkusTestResource;
 import io.quarkus.test.junit.QuarkusTest;
-import io.quarkusdroneshop.barista.TestUtil;
+import io.quarkusdroneshop.qdca10.TestUtil;
 import io.quarkusdroneshop.domain.valueobjects.OrderIn;
 import io.quarkusdroneshop.domain.valueobjects.OrderUp;
 import io.smallrye.reactive.messaging.connectors.InMemoryConnector;

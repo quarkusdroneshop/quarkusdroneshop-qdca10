@@ -1,9 +1,9 @@
-package io.quarkusdroneshop.barista.domain;
+package io.quarkusdroneshop.qdca10.domain;
 
-import io.quarkusdroneshop.barista.TestUtil;
+import io.quarkusdroneshop.qdca10.TestUtil;
 import io.quarkusdroneshop.domain.*;
 import io.quarkus.test.junit.QuarkusTest;
-import io.quarkusdroneshop.domain.valueobjects.BaristaResult;
+import io.quarkusdroneshop.domain.valueobjects.Qdca10Result;
 import io.quarkusdroneshop.domain.valueobjects.OrderIn;
 import io.quarkusdroneshop.domain.valueobjects.OrderUp;
 import org.junit.jupiter.api.BeforeEach;
@@ -20,16 +20,16 @@ import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertNotNull;
 
 @QuarkusTest
-public class BaristaTest {
+public class Qdca10Test {
 
     @Inject
-    Barista barista;
+    Qdca10 QDCA10;
 
     Jsonb jsonb = JsonbBuilder.create();
 
     @BeforeEach
     public void restock() {
-        barista.restockItem(Item.COFFEE_BLACK);
+        QDCA10.restockItem(Item.QDC_A101);
     }
 
     @Test
@@ -37,9 +37,9 @@ public class BaristaTest {
 
         OrderIn orderIn = TestUtil.getOrderTicket();
 
-        BaristaResult baristaResult = barista.make(orderIn);
+        Qdca10Result QDCA10Result = QDCA10.make(orderIn);
 
-        OrderUp orderUp = baristaResult.getOrderUp();
+        OrderUp orderUp = QDCA10Result.getOrderUp();
 
         await().atLeast(Duration.ofSeconds(5000));
 

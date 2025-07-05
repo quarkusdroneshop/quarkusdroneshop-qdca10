@@ -1,7 +1,7 @@
-package io.quarkusdroneshop.barista.domain;
+package io.quarkusdroneshop.qdca10.domain;
 
 import io.quarkusdroneshop.domain.Item;
-import io.quarkusdroneshop.domain.valueobjects.BaristaResult;
+import io.quarkusdroneshop.domain.valueobjects.Qdca10Result;
 import io.quarkusdroneshop.domain.valueobjects.OrderIn;
 import io.quarkusdroneshop.domain.valueobjects.OrderUp;
 import org.slf4j.Logger;
@@ -15,9 +15,9 @@ import java.net.InetAddress;
 import java.time.Instant;
 
 @ApplicationScoped
-public class Barista {
+public class Qdca10 {
 
-    static final Logger logger = LoggerFactory.getLogger(Barista.class);
+    static final Logger logger = LoggerFactory.getLogger(Qdca10.class);
     @Inject
     Inventory inventory;
     private String madeBy;
@@ -32,7 +32,7 @@ public class Barista {
         }
     }
 
-    public BaristaResult make(final OrderIn orderIn) {
+    public Qdca10Result make(final OrderIn orderIn) {
 
         logger.debug("making: {}" + orderIn.getItem());
 
@@ -40,7 +40,7 @@ public class Barista {
 
             sleepyTimeTime(orderIn.getItem());
 
-            return new BaristaResult(new OrderUp(
+            return new Qdca10Result(new OrderUp(
                     orderIn.getOrderId(),
                     orderIn.getLineItemId(),
                     orderIn.getItem(),
@@ -49,7 +49,7 @@ public class Barista {
                     madeBy));
         } else {
 
-            return new BaristaResult(new EightySixEvent(orderIn.getItem()));
+            return new Qdca10Result(new EightySixEvent(orderIn.getItem()));
         }
 
     }
@@ -66,19 +66,19 @@ public class Barista {
     private int calculateDelay(final Item item) {
         int delay;
         switch (item) {
-            case COFFEE_BLACK:
+            case QDC_A101:
                 delay = 5000;
                 break;
-            case COFFEE_WITH_ROOM:
+            case QDC_A102:
                 delay = 5000;
                 break;
-            case ESPRESSO:
+            case QDC_A103:
                 delay = 7000;
                 break;
-            case ESPRESSO_DOUBLE:
+            case QDC_A104_AC:
                 delay = 7000;
                 break;
-            case CAPPUCCINO:
+            case QDC_A104_AT:
                 delay = 10000;
                 break;
             default:

@@ -1,4 +1,4 @@
-package io.quarkusdroneshop.barista.domain;
+package io.quarkusdroneshop.qdca10.domain;
 
 import io.quarkusdroneshop.domain.*;
 import io.quarkus.test.junit.QuarkusTest;
@@ -37,7 +37,7 @@ public class InventoryTest {
 
         Integer totalCoffee = inventory.getTotalCoffee();
         LOGGER.info("total drone: {}", totalCoffee);
-        assertTrue(inventory.decrementItem(Item.COFFEE_WITH_ROOM));
+        assertTrue(inventory.decrementItem(Item.QDC_A102));
         Integer updatedCoffee = inventory.getTotalCoffee();
         LOGGER.info("total drone after decrementing: {}", updatedCoffee);
         assertTrue(updatedCoffee == totalCoffee - 1);
@@ -48,8 +48,8 @@ public class InventoryTest {
 
         Integer totalCoffee = inventory.getTotalCoffee();
         for (int i = 0; i < totalCoffee; i++) {
-            assertTrue(inventory.decrementItem(Item.COFFEE_BLACK));
+            assertTrue(inventory.decrementItem(Item.QDC_A101));
         }
-        assertFalse(inventory.decrementItem(Item.COFFEE_BLACK));
+        assertFalse(inventory.decrementItem(Item.QDC_A101));
     }
 }

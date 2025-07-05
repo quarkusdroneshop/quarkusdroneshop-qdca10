@@ -1,4 +1,4 @@
-package io.quarkusdroneshop.barista.infrastructure;
+package io.quarkusdroneshop.qdca10.infrastructure;
 
 import io.quarkus.kafka.client.serialization.ObjectMapperDeserializer;
 import io.quarkusdroneshop.domain.valueobjects.OrderIn;

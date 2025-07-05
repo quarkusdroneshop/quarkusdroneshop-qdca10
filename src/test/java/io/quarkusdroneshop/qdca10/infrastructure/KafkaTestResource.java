@@ -1,4 +1,4 @@
-package io.quarkusdroneshop.barista.infrastructure;
+package io.quarkusdroneshop.qdca10.infrastructure;
 
 import java.util.Collections;
 import java.util.HashMap;

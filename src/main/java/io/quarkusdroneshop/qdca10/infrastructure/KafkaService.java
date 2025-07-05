@@ -1,9 +1,11 @@
-package io.quarkusdroneshop.barista.infrastructure;
+package io.quarkusdroneshop.qdca10.infrastructure;
 
 import io.quarkus.runtime.annotations.RegisterForReflection;
-import io.quarkusdroneshop.barista.domain.Barista;
+import io.quarkusdroneshop.qdca10.domain.Qdca10;
 import io.quarkusdroneshop.domain.valueobjects.OrderIn;
 import io.quarkusdroneshop.domain.valueobjects.OrderUp;
+import io.quarkusdroneshop.domain.valueobjects.Qdca10Result;
+
 import org.eclipse.microprofile.reactive.messaging.Channel;
 import org.eclipse.microprofile.reactive.messaging.Emitter;
 import org.eclipse.microprofile.reactive.messaging.Incoming;
@@ -21,7 +23,7 @@ public class KafkaService {
     Logger logger = LoggerFactory.getLogger(KafkaService.class);
 
     @Inject
-    Barista barista;
+    Qdca10 qdca10;
 
     @Inject
     @Channel("orders-up")
@@ -32,25 +34,20 @@ public class KafkaService {
     Emitter<String> eightySixEmitter;
 
     @Incoming("orders-in")
-    public CompletableFuture onOrderIn(final OrderIn orderIn) {
+    public CompletableFuture<Void> onOrderIn(final OrderIn orderIn) {
 
         logger.debug("OrderTicket received: {}", orderIn);
-
-        return CompletableFuture.supplyAsync(() -> {
-
-            return barista.make(orderIn);
-        }).thenApply(baristaResult -> {
-
-            if (baristaResult.isEightySixed()) {
-
-                eightySixEmitter.send(orderIn.getItem().toString());
-            }else{
-
-                logger.debug( "OrderUp: {}", baristaResult.getOrderUp());
-                orderUpEmitter.send(baristaResult.getOrderUp());
-            }
-
-            return null;
-        });
+    
+        return CompletableFuture
+            .supplyAsync(() -> qdca10.make(orderIn))
+            .thenAccept(result -> {
+    
+                if (result.isEightySixed()) {
+                    eightySixEmitter.send(orderIn.getItem().toString());
+                } else {
+                    logger.debug("OrderUp: {}", result.getOrderUp());
+                    orderUpEmitter.send(result.getOrderUp());
+                }
+            });
     }
 }

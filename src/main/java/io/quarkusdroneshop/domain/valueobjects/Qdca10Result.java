@@ -1,8 +1,8 @@
 package io.quarkusdroneshop.domain.valueobjects;
 
-import io.quarkusdroneshop.barista.domain.EightySixEvent;
+import io.quarkusdroneshop.qdca10.domain.EightySixEvent;
 
-public class BaristaResult {
+public class Qdca10Result {
 
     private OrderUp orderUp;
 
@@ -10,11 +10,11 @@ public class BaristaResult {
 
     private boolean isEightySixed;
 
-    public BaristaResult(OrderUp orderUp) {
+    public Qdca10Result(OrderUp orderUp) {
         this.orderUp = orderUp;
     }
 
-    public BaristaResult(EightySixEvent eightySixEvent) {
+    public Qdca10Result(EightySixEvent eightySixEvent) {
         this.eightySixEvent = eightySixEvent;
         this.isEightySixed = true;
     }

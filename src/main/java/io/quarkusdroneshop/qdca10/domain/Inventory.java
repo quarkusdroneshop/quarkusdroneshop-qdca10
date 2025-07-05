@@ -1,4 +1,4 @@
-package io.quarkusdroneshop.barista.domain;
+package io.quarkusdroneshop.qdca10.domain;
 
 import io.quarkusdroneshop.domain.Item;
 import org.slf4j.Logger;
@@ -22,7 +22,7 @@ public class Inventory {
     }
 
     /*
-        COFFEE_BLACK and COFFEE_WITH_ROOM are simply tracked as COFFEE_BLACK
+        QDC_A101 and QDC_A102 are simply tracked as QDC_A101
      */
     @PostConstruct
     private void createStock() {
@@ -35,17 +35,17 @@ public class Inventory {
         });
 
         // Account for drone
-        Integer totalCoffee = stock.get(Item.COFFEE_BLACK).intValue() + stock.get(Item.COFFEE_WITH_ROOM).intValue();
-        stock.remove(Item.COFFEE_BLACK);
-        stock.remove(Item.COFFEE_WITH_ROOM);
-        stock.put(Item.COFFEE_BLACK, totalCoffee);
+        Integer totalCoffee = stock.get(Item.QDC_A101).intValue() + stock.get(Item.QDC_A102).intValue();
+        stock.remove(Item.QDC_A101);
+        stock.remove(Item.QDC_A102);
+        stock.put(Item.QDC_A101, totalCoffee);
     }
 
     public boolean decrementItem(Item item) {
 
         LOGGER.debug("decrementing {}", item);
 
-        if (item == Item.COFFEE_WITH_ROOM) item = Item.COFFEE_BLACK;
+        if (item == Item.QDC_A102) item = Item.QDC_A101;
 
         Integer itemCount = stock.get(item);
         LOGGER.debug("current inventory for {} is {}", item, itemCount);
@@ -63,7 +63,7 @@ public class Inventory {
     }
 
     public Integer getTotalCoffee() {
-        return stock.get(Item.COFFEE_BLACK);
+        return stock.get(Item.QDC_A101);
     }
 
     public void restock(Item item) {

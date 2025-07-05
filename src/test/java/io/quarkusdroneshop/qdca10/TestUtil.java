@@ -1,4 +1,4 @@
-package io.quarkusdroneshop.barista;
+package io.quarkusdroneshop.qdca10;
 
 import io.quarkusdroneshop.domain.Item;
 import io.quarkusdroneshop.domain.valueobjects.OrderIn;
@@ -12,7 +12,7 @@ public class TestUtil {
         return new OrderIn(
                 UUID.randomUUID().toString(),
                 UUID.randomUUID().toString(),
-                Item.COFFEE_BLACK,
+                Item.QDC_A101,
                 "Lemmy"
         );
     }

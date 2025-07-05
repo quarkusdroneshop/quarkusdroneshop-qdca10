@@ -1,4 +1,4 @@
-package io.quarkusdroneshop.barista.domain;
+package io.quarkusdroneshop.qdca10.domain;
 
 import io.quarkusdroneshop.domain.Item;
 
@@ -8,7 +8,7 @@ import java.util.Collection;
 public class EightySixCoffeeException extends Exception {
 
     public Collection<EightySixEvent> getEvents() {
-        return Arrays.asList(new EightySixEvent(Item.COFFEE_BLACK), new EightySixEvent(Item.COFFEE_WITH_ROOM));
+        return Arrays.asList(new EightySixEvent(Item.QDC_A101), new EightySixEvent(Item.QDC_A102));
     }
 
 }
