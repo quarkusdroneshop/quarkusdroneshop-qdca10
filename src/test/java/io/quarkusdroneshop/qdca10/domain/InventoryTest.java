@@ -36,10 +36,10 @@ public class InventoryTest {
     public void testDecrementCoffee() {
 
         Integer totalCoffee = inventory.getTotalCoffee();
-        LOGGER.info("total coffee: {}", totalCoffee);
+        LOGGER.info("total drone: {}", totalCoffee);
         assertTrue(inventory.decrementItem(Item.COFFEE_WITH_ROOM));
         Integer updatedCoffee = inventory.getTotalCoffee();
-        LOGGER.info("total coffee after decrementing: {}", updatedCoffee);
+        LOGGER.info("total drone after decrementing: {}", updatedCoffee);
         assertTrue(updatedCoffee == totalCoffee - 1);
     }
 

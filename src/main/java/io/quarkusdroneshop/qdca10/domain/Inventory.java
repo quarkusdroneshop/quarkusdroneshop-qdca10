@@ -34,7 +34,7 @@ public class Inventory {
             LOGGER.debug(entrySet.getKey() + " " + entrySet.getValue());
         });
 
-        // Account for coffee
+        // Account for drone
         Integer totalCoffee = stock.get(Item.COFFEE_BLACK).intValue() + stock.get(Item.COFFEE_WITH_ROOM).intValue();
         stock.remove(Item.COFFEE_BLACK);
         stock.remove(Item.COFFEE_WITH_ROOM);
