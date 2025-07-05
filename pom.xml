@@ -2,7 +2,7 @@
 <project xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd" xmlns="http://maven.apache.org/POM/4.0.0"
     xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
   <modelVersion>4.0.0</modelVersion>
-  <groupId>io.quarkuscoffeeshop</groupId>
+  <groupId>io.quarkusdroneshop</groupId>
   <artifactId>quarkuscoffeeshop-barista</artifactId>
   <version>5.1.0</version>
   <properties>
@@ -34,7 +34,7 @@
         <scope>import</scope>
       </dependency>
       <dependency>
-        <groupId>io.quarkuscoffeeshop</groupId>
+        <groupId>io.quarkusdroneshop</groupId>
         <artifactId>quarkuscoffeeshop-testutils</artifactId>
         <version>${coffeeshop-testutils.version}</version>
       </dependency>
@@ -93,7 +93,7 @@
       <scope>test</scope>
     </dependency>
     <dependency>
-      <groupId>io.quarkuscoffeeshop</groupId>
+      <groupId>io.quarkusdroneshop</groupId>
       <artifactId>quarkuscoffeeshop-testutils</artifactId>
       <scope>test</scope>
     </dependency>

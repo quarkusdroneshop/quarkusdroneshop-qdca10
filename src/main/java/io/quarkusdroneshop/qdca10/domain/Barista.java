@@ -1,9 +1,9 @@
-package io.quarkuscoffeeshop.barista.domain;
+package io.quarkusdroneshop.barista.domain;
 
-import io.quarkuscoffeeshop.domain.Item;
-import io.quarkuscoffeeshop.domain.valueobjects.BaristaResult;
-import io.quarkuscoffeeshop.domain.valueobjects.OrderIn;
-import io.quarkuscoffeeshop.domain.valueobjects.OrderUp;
+import io.quarkusdroneshop.domain.Item;
+import io.quarkusdroneshop.domain.valueobjects.BaristaResult;
+import io.quarkusdroneshop.domain.valueobjects.OrderIn;
+import io.quarkusdroneshop.domain.valueobjects.OrderUp;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 

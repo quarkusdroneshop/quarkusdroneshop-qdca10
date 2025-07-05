@@ -1,6 +1,6 @@
-package io.quarkuscoffeeshop.barista.domain;
+package io.quarkusdroneshop.barista.domain;
 
-import io.quarkuscoffeeshop.domain.*;
+import io.quarkusdroneshop.domain.*;
 import io.quarkus.test.junit.QuarkusTest;
 import org.junit.jupiter.api.MethodOrderer;
 import org.junit.jupiter.api.Order;

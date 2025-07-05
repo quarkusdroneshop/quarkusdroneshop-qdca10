@@ -1,11 +1,11 @@
-package io.quarkuscoffeeshop.barista.domain;
+package io.quarkusdroneshop.barista.domain;
 
-import io.quarkuscoffeeshop.barista.TestUtil;
-import io.quarkuscoffeeshop.domain.*;
+import io.quarkusdroneshop.barista.TestUtil;
+import io.quarkusdroneshop.domain.*;
 import io.quarkus.test.junit.QuarkusTest;
-import io.quarkuscoffeeshop.domain.valueobjects.BaristaResult;
-import io.quarkuscoffeeshop.domain.valueobjects.OrderIn;
-import io.quarkuscoffeeshop.domain.valueobjects.OrderUp;
+import io.quarkusdroneshop.domain.valueobjects.BaristaResult;
+import io.quarkusdroneshop.domain.valueobjects.OrderIn;
+import io.quarkusdroneshop.domain.valueobjects.OrderUp;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 

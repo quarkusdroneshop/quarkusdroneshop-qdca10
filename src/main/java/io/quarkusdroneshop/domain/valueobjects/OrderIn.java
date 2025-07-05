@@ -1,7 +1,7 @@
-package io.quarkuscoffeeshop.domain.valueobjects;
+package io.quarkusdroneshop.domain.valueobjects;
 
 import io.quarkus.runtime.annotations.RegisterForReflection;
-import io.quarkuscoffeeshop.domain.Item;
+import io.quarkusdroneshop.domain.Item;
 
 import java.time.Instant;
 import java.util.StringJoiner;

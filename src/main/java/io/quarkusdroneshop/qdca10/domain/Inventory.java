@@ -1,6 +1,6 @@
-package io.quarkuscoffeeshop.barista.domain;
+package io.quarkusdroneshop.barista.domain;
 
-import io.quarkuscoffeeshop.domain.Item;
+import io.quarkusdroneshop.domain.Item;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 

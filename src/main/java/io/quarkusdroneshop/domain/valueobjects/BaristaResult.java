@@ -1,6 +1,6 @@
-package io.quarkuscoffeeshop.domain.valueobjects;
+package io.quarkusdroneshop.domain.valueobjects;
 
-import io.quarkuscoffeeshop.barista.domain.EightySixEvent;
+import io.quarkusdroneshop.barista.domain.EightySixEvent;
 
 public class BaristaResult {
 

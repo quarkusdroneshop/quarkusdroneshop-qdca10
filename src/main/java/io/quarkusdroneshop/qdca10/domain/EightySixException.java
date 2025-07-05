@@ -1,7 +1,7 @@
-package io.quarkuscoffeeshop.barista.domain;
+package io.quarkusdroneshop.barista.domain;
 
 import io.quarkus.runtime.annotations.RegisterForReflection;
-import io.quarkuscoffeeshop.domain.Item;
+import io.quarkusdroneshop.domain.Item;
 
 import java.util.ArrayList;
 import java.util.Arrays;

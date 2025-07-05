@@ -1,7 +1,7 @@
-package io.quarkuscoffeeshop.barista;
+package io.quarkusdroneshop.barista;
 
-import io.quarkuscoffeeshop.domain.Item;
-import io.quarkuscoffeeshop.domain.valueobjects.OrderIn;
+import io.quarkusdroneshop.domain.Item;
+import io.quarkusdroneshop.domain.valueobjects.OrderIn;
 
 import java.util.UUID;
 

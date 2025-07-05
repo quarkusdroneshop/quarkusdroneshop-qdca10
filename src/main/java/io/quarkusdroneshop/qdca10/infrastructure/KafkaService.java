@@ -1,9 +1,9 @@
-package io.quarkuscoffeeshop.barista.infrastructure;
+package io.quarkusdroneshop.barista.infrastructure;
 
 import io.quarkus.runtime.annotations.RegisterForReflection;
-import io.quarkuscoffeeshop.barista.domain.Barista;
-import io.quarkuscoffeeshop.domain.valueobjects.OrderIn;
-import io.quarkuscoffeeshop.domain.valueobjects.OrderUp;
+import io.quarkusdroneshop.barista.domain.Barista;
+import io.quarkusdroneshop.domain.valueobjects.OrderIn;
+import io.quarkusdroneshop.domain.valueobjects.OrderUp;
 import org.eclipse.microprofile.reactive.messaging.Channel;
 import org.eclipse.microprofile.reactive.messaging.Emitter;
 import org.eclipse.microprofile.reactive.messaging.Incoming;

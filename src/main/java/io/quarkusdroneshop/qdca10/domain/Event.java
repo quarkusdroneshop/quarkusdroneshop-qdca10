@@ -1,4 +1,4 @@
-package io.quarkuscoffeeshop.barista.domain;
+package io.quarkusdroneshop.barista.domain;
 
 import io.quarkus.runtime.annotations.RegisterForReflection;
 

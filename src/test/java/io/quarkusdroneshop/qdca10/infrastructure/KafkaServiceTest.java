@@ -1,11 +1,11 @@
-package io.quarkuscoffeeshop.barista.infrastructure;
+package io.quarkusdroneshop.barista.infrastructure;
 
 import io.quarkus.test.common.QuarkusTestResource;
 import io.quarkus.test.junit.QuarkusTest;
 import io.quarkus.test.junit.mockito.InjectSpy;
-import io.quarkuscoffeeshop.barista.TestUtil;
-import io.quarkuscoffeeshop.domain.valueobjects.OrderIn;
-import io.quarkuscoffeeshop.domain.valueobjects.OrderUp;
+import io.quarkusdroneshop.barista.TestUtil;
+import io.quarkusdroneshop.domain.valueobjects.OrderIn;
+import io.quarkusdroneshop.domain.valueobjects.OrderUp;
 import io.smallrye.reactive.messaging.connectors.InMemoryConnector;
 import io.smallrye.reactive.messaging.connectors.InMemorySink;
 import io.smallrye.reactive.messaging.connectors.InMemorySource;

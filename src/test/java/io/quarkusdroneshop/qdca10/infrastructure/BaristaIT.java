@@ -1,7 +1,7 @@
-package io.quarkuscoffeeshop.barista.infrastructure;
+package io.quarkusdroneshop.barista.infrastructure;
 
-import io.quarkuscoffeeshop.domain.*;
-import io.quarkuscoffeeshop.infrastructure.KafkaIT;
+import io.quarkusdroneshop.domain.*;
+import io.quarkusdroneshop.infrastructure.KafkaIT;
 import io.quarkus.test.common.QuarkusTestResource;
 import io.quarkus.test.junit.QuarkusTest;
 import org.apache.kafka.clients.consumer.ConsumerRecord;
