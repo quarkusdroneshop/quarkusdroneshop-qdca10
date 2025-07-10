@@ -82,7 +82,7 @@ public class Qdca10 {
                 delay = 10000;
                 break;
             default:
-                delay = 3000;
+                delay = 10000;
                 break;
         }
         ;
