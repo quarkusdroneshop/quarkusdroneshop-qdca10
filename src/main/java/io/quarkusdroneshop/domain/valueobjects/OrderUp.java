@@ -6,6 +6,8 @@ import io.quarkusdroneshop.domain.Item;
 import java.time.Instant;
 import java.util.StringJoiner;
 
+import com.fasterxml.jackson.annotation.JsonFormat;
+
 @RegisterForReflection
 public class OrderUp {
 
@@ -17,6 +19,7 @@ public class OrderUp {
 
     public final String name;
 
+    @JsonFormat(shape = JsonFormat.Shape.STRING)
     public final Instant timestamp;
 
     public final String madeBy;
