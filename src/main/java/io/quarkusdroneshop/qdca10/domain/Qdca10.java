@@ -89,7 +89,6 @@ public class Qdca10 {
         return delay;
     }
 
-
     public void restockItem(Item item) {
         inventory.restock(item);
     }
