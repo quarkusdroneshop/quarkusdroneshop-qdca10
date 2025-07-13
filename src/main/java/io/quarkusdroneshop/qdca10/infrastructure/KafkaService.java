@@ -35,11 +35,11 @@ public class KafkaService {
 
     @Incoming("orders-in")
     public CompletableFuture<Void> onOrderIn(final OrderIn orderIn) {
-
+    
         logger.debug("OrderTicket received: {}", orderIn);
     
         return CompletableFuture
-            .supplyAsync(() -> qdca10.make(orderIn))
+            .supplyAsync(new Qdca10Task(qdca10, orderIn))
             .thenAccept(result -> {
     
                 if (result.isEightySixed()) {
