@@ -4,7 +4,6 @@ import io.quarkus.runtime.annotations.RegisterForReflection;
 import io.quarkusdroneshop.qdca10.domain.Qdca10;
 import io.quarkusdroneshop.domain.valueobjects.OrderIn;
 import io.quarkusdroneshop.domain.valueobjects.OrderUp;
-import io.quarkusdroneshop.domain.valueobjects.Qdca10Result;
 
 import org.eclipse.microprofile.reactive.messaging.Channel;
 import org.eclipse.microprofile.reactive.messaging.Emitter;
@@ -35,18 +34,33 @@ public class KafkaService {
 
     @Incoming("orders-in")
     public CompletableFuture<Void> onOrderIn(final OrderIn orderIn) {
-    
+
         logger.debug("OrderTicket received: {}", orderIn);
-    
+
         return CompletableFuture
             .supplyAsync(new Qdca10Task(qdca10, orderIn))
             .thenAccept(result -> {
-    
                 if (result.isEightySixed()) {
-                    eightySixEmitter.send(orderIn.getItem().toString());
+                    logger.debug("Item is eighty-sixed, sending to topic: {}", orderIn.getItem());
+                    eightySixEmitter.send(orderIn.getItem().toString())
+                        .whenComplete((res, ex) -> {
+                            if (ex != null) {
+                                logger.error("Failed to send to eighty-six topic", ex);
+                            } else {
+                                logger.debug("Sent to eighty-six topic successfully");
+                            }
+                        });
                 } else {
-                    logger.debug("OrderUp: {}", result.getOrderUp());
-                    orderUpEmitter.send(result.getOrderUp());
+                    OrderUp orderUp = result.getOrderUp();
+                    logger.debug("OrderUp: {}", orderUp);
+                    orderUpEmitter.send(orderUp)
+                        .whenComplete((res, ex) -> {
+                            if (ex != null) {
+                                logger.error("Failed to send OrderUp to Kafka", ex);
+                            } else {
+                                logger.debug("OrderUp sent successfully to Kafka");
+                            }
+                        });
                 }
             });
     }
