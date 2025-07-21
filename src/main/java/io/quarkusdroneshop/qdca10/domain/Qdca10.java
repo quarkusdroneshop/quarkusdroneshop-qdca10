@@ -21,21 +21,29 @@ public class Qdca10 {
     static final Logger logger = LoggerFactory.getLogger(Qdca10.class);
     @Inject
     Inventory inventory;
-    private String madeBy;
+    //private String madeBy;
 
-    @PostConstruct
-    void setHostName() {
+    // @PostConstruct
+    // void setHostName() {
+    //     try {
+    //         madeBy = InetAddress.getLocalHost().getHostName() + "-" + UUID.randomUUID().toString().replace("-", "").substring(0, 16);
+    //     } catch (IOException e) {
+    //         logger.debug("unable to get hostname");
+    //         madeBy = "unknown";
+    //     }
+    // }
+
+    public Qdca10Result make(final OrderIn orderIn) {
+
+        logger.debug("making: {}" + orderIn.getItem());
+
+        String madeBy;  
         try {
             madeBy = InetAddress.getLocalHost().getHostName() + "-" + UUID.randomUUID().toString().replace("-", "").substring(0, 16);
         } catch (IOException e) {
             logger.debug("unable to get hostname");
             madeBy = "unknown";
         }
-    }
-
-    public Qdca10Result make(final OrderIn orderIn) {
-
-        logger.debug("making: {}" + orderIn.getItem());
 
         if (inventory.decrementItem(orderIn.getItem())) {
 
