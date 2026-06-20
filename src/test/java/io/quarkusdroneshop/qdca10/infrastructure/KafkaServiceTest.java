@@ -6,9 +6,9 @@ import io.quarkus.test.junit.mockito.InjectSpy;
 import io.quarkusdroneshop.qdca10.TestUtil;
 import io.quarkusdroneshop.domain.valueobjects.OrderIn;
 import io.quarkusdroneshop.domain.valueobjects.OrderUp;
-import io.smallrye.reactive.messaging.connectors.InMemoryConnector;
-import io.smallrye.reactive.messaging.connectors.InMemorySink;
-import io.smallrye.reactive.messaging.connectors.InMemorySource;
+import io.smallrye.reactive.messaging.memory.InMemoryConnector;
+import io.smallrye.reactive.messaging.memory.InMemorySink;
+import io.smallrye.reactive.messaging.memory.InMemorySource;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
@@ -17,6 +17,7 @@ import jakarta.inject.Inject;
 
 import java.time.Duration;
 import java.util.List;
+import java.util.concurrent.TimeUnit;
 
 import static org.awaitility.Awaitility.await;
 import static org.junit.jupiter.api.Assertions.assertEquals;
@@ -49,6 +50,7 @@ public class KafkaServiceTest {
 
         OrderIn orderIn = TestUtil.getOrderTicket();
         ordersIn.send(orderIn);
-        verify(kafkaService, times(1)).onOrderIn(any(OrderIn.class));
+        await().atMost(5, TimeUnit.SECONDS)
+               .untilAsserted(() -> verify(kafkaService, times(1)).onOrderIn(any(OrderIn.class)));
     }
 }

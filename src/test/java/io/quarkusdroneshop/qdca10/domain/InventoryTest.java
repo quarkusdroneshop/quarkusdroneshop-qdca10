@@ -12,7 +12,7 @@ import org.slf4j.LoggerFactory;
 import jakarta.inject.Inject;
 import java.util.Map;
 
-import static org.junit.Assert.*;
+import static org.junit.jupiter.api.Assertions.*;
 
 @QuarkusTest @TestMethodOrder(MethodOrderer.OrderAnnotation.class)
 public class InventoryTest {
