@@ -12,8 +12,8 @@ import io.smallrye.reactive.messaging.connectors.InMemorySource;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
-import javax.enterprise.inject.Any;
-import javax.inject.Inject;
+import jakarta.enterprise.inject.Any;
+import jakarta.inject.Inject;
 
 import java.time.Duration;
 import java.util.List;
