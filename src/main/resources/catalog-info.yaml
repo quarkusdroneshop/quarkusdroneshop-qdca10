@@ -38,6 +38,11 @@ metadata:
   description: "Kafka トピック: shop-asite.qdca10-in（QDCA10注文チケット受信）"
   annotations:
     backstage.io/kubernetes-cluster: b-cluster
+    openmetadata/explore-url: "http://openmetadata-openmetadata.apps.ocp.hfczn.sandbox2320.opentlc.com/topic/external-shop-cluster-kafka-asite%3A9094.qdca10-in/schema"
+  links:
+    - url: "http://openmetadata-openmetadata.apps.ocp.hfczn.sandbox2320.opentlc.com/topic/external-shop-cluster-kafka-asite%3A9094.qdca10-in/schema"
+      title: データカタログ
+      icon: dashboard
 spec:
   type: asyncapi
   lifecycle: production
@@ -78,6 +83,11 @@ metadata:
   description: "Kafka トピック: orders-up（注文完了通知）"
   annotations:
     backstage.io/kubernetes-cluster: b-cluster
+    openmetadata/explore-url: "http://openmetadata-openmetadata.apps.ocp.hfczn.sandbox2320.opentlc.com/topic/external-shop-cluster-kafka-bsite%3A9094.orders-up/schema"
+  links:
+    - url: "http://openmetadata-openmetadata.apps.ocp.hfczn.sandbox2320.opentlc.com/topic/external-shop-cluster-kafka-bsite%3A9094.orders-up/schema"
+      title: データカタログ
+      icon: dashboard
 spec:
   type: asyncapi
   lifecycle: production
@@ -120,6 +130,11 @@ metadata:
   description: "Kafka トピック: eighty-six（在庫切れ通知）"
   annotations:
     backstage.io/kubernetes-cluster: b-cluster
+    openmetadata/explore-url: "http://openmetadata-openmetadata.apps.ocp.hfczn.sandbox2320.opentlc.com/topic/external-shop-cluster-kafka-bsite%3A9094.eighty-six/schema"
+  links:
+    - url: "http://openmetadata-openmetadata.apps.ocp.hfczn.sandbox2320.opentlc.com/topic/external-shop-cluster-kafka-bsite%3A9094.eighty-six/schema"
+      title: データカタログ
+      icon: dashboard
 spec:
   type: asyncapi
   lifecycle: production
