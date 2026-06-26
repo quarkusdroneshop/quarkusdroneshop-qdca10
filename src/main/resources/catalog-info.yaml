@@ -27,15 +27,15 @@ spec:
     - resource:shop-cluster-kafka
     - resource:shop-asite-qdca10-in
   consumesApis:
-    - kafka-shop-asite-qdca10-in
+    - kafka-bsite-qdca10-in
   providesApis:
-    - kafka-orders-up
-    - kafka-eighty-six
+    - kafka-bsite-orders-up
+    - kafka-bsite-eighty-six
 ---
 apiVersion: backstage.io/v1alpha1
 kind: API
 metadata:
-  name: kafka-shop-asite-qdca10-in
+  name: kafka-bsite-qdca10-in
   description: "Kafka トピック: shop-asite.qdca10-in（QDCA10注文チケット受信）"
   annotations:
     backstage.io/kubernetes-cluster: b-cluster
@@ -80,7 +80,7 @@ spec:
 apiVersion: backstage.io/v1alpha1
 kind: API
 metadata:
-  name: kafka-orders-up
+  name: kafka-bsite-orders-up
   description: "Kafka トピック: orders-up（注文完了通知）"
   annotations:
     backstage.io/kubernetes-cluster: b-cluster
@@ -127,7 +127,7 @@ spec:
 apiVersion: backstage.io/v1alpha1
 kind: API
 metadata:
-  name: kafka-eighty-six
+  name: kafka-bsite-eighty-six
   description: "Kafka トピック: eighty-six（在庫切れ通知）"
   annotations:
     backstage.io/kubernetes-cluster: b-cluster
