@@ -27,8 +27,9 @@ spec:
   system: b-cluster
   dependsOn:
     - resource:shop-cluster-kafka
-    - resource:shop-asite-qdca10-in
+    - resource:shop-bsite-qdca10-in
+    - resource:droneshopdb-bsite-postgresql
   consumesApis:
-    - kafka-shop-asite-qdca10-in
+    - kafka-bsite-qdca10-in
   providesApis:
-    - kafka-orders-up
+    - kafka-bsite-orders-up
