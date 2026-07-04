@@ -33,7 +33,7 @@ public class Qdca10Test {
     }
 
     @Test
-    public void testBlackCoffeeOrder() throws ExecutionException, InterruptedException {
+    public void testQDC_A101Order() throws ExecutionException, InterruptedException {
 
         OrderIn orderIn = TestUtil.getOrderTicket();
 

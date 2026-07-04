@@ -35,10 +35,10 @@ public class Inventory {
         });
 
         // Account for drone
-        Integer totalCoffee = stock.get(Item.QDC_A101).intValue() + stock.get(Item.QDC_A102).intValue();
+        Integer totalQDCA10 = stock.get(Item.QDC_A101).intValue() + stock.get(Item.QDC_A102).intValue();
         stock.remove(Item.QDC_A101);
         stock.remove(Item.QDC_A102);
-        stock.put(Item.QDC_A101, totalCoffee);
+        stock.put(Item.QDC_A101, totalQDCA10);
     }
 
     public boolean decrementItem(Item item) {
