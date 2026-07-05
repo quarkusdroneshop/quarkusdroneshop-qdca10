@@ -62,7 +62,7 @@ public class Inventory {
         return stock;
     }
 
-    public Integer getTotalCoffee() {
+    public Integer getTotalDrone() {
         return stock.get(Item.QDC_A101);
     }
 

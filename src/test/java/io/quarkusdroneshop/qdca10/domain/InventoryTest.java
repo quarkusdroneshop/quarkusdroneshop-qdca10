@@ -33,21 +33,21 @@ public class InventoryTest {
     }
 
     @Test @Order(2)
-    public void testDecrementCoffee() {
+    public void testDecrementDrone() {
 
-        Integer totalCoffee = inventory.getTotalCoffee();
-        LOGGER.info("total drone: {}", totalCoffee);
+        Integer totalDrone = inventory.getTotalDrone();
+        LOGGER.info("total drone: {}", totalDrone);
         assertTrue(inventory.decrementItem(Item.QDC_A102));
-        Integer updatedCoffee = inventory.getTotalCoffee();
-        LOGGER.info("total drone after decrementing: {}", updatedCoffee);
-        assertTrue(updatedCoffee == totalCoffee - 1);
+        Integer updatedDrone = inventory.getTotalDrone();
+        LOGGER.info("total drone after decrementing: {}", updatedDrone);
+        assertTrue(updatedDrone == totalDrone - 1);
     }
 
     @Test @Order(3)
-    public void testEightySixCoffee() {
+    public void testEightySixDrone() {
 
-        Integer totalCoffee = inventory.getTotalCoffee();
-        for (int i = 0; i < totalCoffee; i++) {
+        Integer totalDrone = inventory.getTotalDrone();
+        for (int i = 0; i < totalDrone; i++) {
             assertTrue(inventory.decrementItem(Item.QDC_A101));
         }
         assertFalse(inventory.decrementItem(Item.QDC_A101));

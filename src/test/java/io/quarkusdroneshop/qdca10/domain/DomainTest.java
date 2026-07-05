@@ -50,11 +50,11 @@ public class DomainTest {
         assertEquals(2, ex.getItems().size());
     }
 
-    // ── EightySixCoffeeException ──────────────────────────────────────────────
+    // ── EightySixDroneException ──────────────────────────────────────────────
 
     @Test
-    void testEightySixCoffeeException_getEvents() {
-        EightySixCoffeeException ex = new EightySixCoffeeException();
+    void testEightySixDroneException_getEvents() {
+        EightySixDroneException ex = new EightySixDroneException();
         Collection<EightySixEvent> events = ex.getEvents();
         assertNotNull(events);
         assertEquals(2, events.size());

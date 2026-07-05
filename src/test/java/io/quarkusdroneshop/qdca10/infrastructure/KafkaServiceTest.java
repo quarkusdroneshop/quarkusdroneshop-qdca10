@@ -46,7 +46,7 @@ public class KafkaServiceTest {
     }
 
     @Test
-    public void testSingleBlackCoffee() {
+    public void testSingleDrone() {
 
         OrderIn orderIn = TestUtil.getOrderTicket();
         ordersIn.send(orderIn);
