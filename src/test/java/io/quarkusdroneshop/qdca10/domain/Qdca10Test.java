@@ -10,8 +10,6 @@ import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
 import jakarta.inject.Inject;
-import jakarta.json.bind.Jsonb;
-import jakarta.json.bind.JsonbBuilder;
 import java.time.Duration;
 import java.util.concurrent.ExecutionException;
 
@@ -24,8 +22,6 @@ public class Qdca10Test {
 
     @Inject
     Qdca10 QDCA10;
-
-    Jsonb jsonb = JsonbBuilder.create();
 
     @BeforeEach
     public void restock() {
