@@ -87,6 +87,7 @@ public class ArchitectureTest {
         classes()
             .that().resideInAPackage("io.quarkusdroneshop.qdca10.domain")
             .and().areNotInterfaces()
+            .and().areNotAnonymousClasses()
             .should().bePublic();
 
     @ArchTest
