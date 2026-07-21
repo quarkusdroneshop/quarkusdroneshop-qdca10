@@ -60,7 +60,22 @@ public class Inventory {
         itemCount--;
         stock.put(key, itemCount);
         LOGGER.debug("updated inventory for {} is {}", key, stock.get(key));
+
+        // component-stock-decrement で下流 (在庫サービス) へ実消費を反映できるよう、
+        // 元の item コード単位でも直近ベースラインを減算しておく (QDC_A101/QDC_A102 の
+        // プール合算はここでは行わない。在庫サービス側は item ごとに独立した在庫を
+        // 持つため、公開する数量も item ごとの粒度を保つ必要がある)。
+        Integer raw = rawBaseline.get(item);
+        if (raw != null && raw > 0) {
+            rawBaseline.put(item, raw - 1);
+        }
         return true;
+    }
+
+    // drone-component-stock からまだ一度もベースラインを受信していない item は
+    // null を返す (呼び出し側は publish をスキップする)。
+    public synchronized Integer getRawBaseline(final Item item) {
+        return rawBaseline.get(item);
     }
 
     public synchronized Map<Item, Integer> getStock() {
