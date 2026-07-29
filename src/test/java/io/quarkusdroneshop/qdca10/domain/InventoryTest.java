@@ -35,6 +35,9 @@ public class InventoryTest {
     @Test @Order(2)
     public void testDecrementDrone() {
 
+        // Inventory は在庫初期値を捏造しない設計のため、実データ受信を模して
+        // 明示的に補充してから検証する。
+        inventory.applyStockUpdate(Item.QDC_A101, 10);
         Integer totalDrone = inventory.getTotalDrone();
         LOGGER.info("total drone: {}", totalDrone);
         assertTrue(inventory.decrementItem(Item.QDC_A102));
