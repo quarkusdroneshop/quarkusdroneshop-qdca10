@@ -23,9 +23,12 @@ public class Qdca10Test {
     @Inject
     Qdca10 QDCA10;
 
+    @Inject
+    Inventory inventory;
+
     @BeforeEach
     public void restock() {
-        QDCA10.restockItem(Item.QDC_A101);
+        inventory.applyStockUpdate(Item.QDC_A101, 5);
     }
 
     @Test

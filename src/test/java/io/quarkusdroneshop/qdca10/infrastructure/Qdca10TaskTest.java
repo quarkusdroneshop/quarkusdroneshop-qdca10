@@ -25,7 +25,7 @@ public class Qdca10TaskTest {
 
     @Test
     void testQdca10Task_get_orderUp() {
-        inventory.restock(Item.QDC_A101);
+        inventory.applyStockUpdate(Item.QDC_A101, 5);
         OrderIn orderIn = new OrderIn(
                 UUID.randomUUID().toString(),
                 UUID.randomUUID().toString(),
