@@ -47,16 +47,30 @@ public class OrderUp {
 
     @Override
     public boolean equals(Object o) {
-        if (this == o) return true;
-        if (o == null || getClass() != o.getClass()) return false;
+        if (this == o) {
+            return true;
+        }
+        if (o == null || getClass() != o.getClass()) {
+            return false;
+        }
 
         OrderUp orderUp = (OrderUp) o;
 
-        if (orderId != null ? !orderId.equals(orderUp.orderId) : orderUp.orderId != null) return false;
-        if (lineItemId != null ? !lineItemId.equals(orderUp.lineItemId) : orderUp.lineItemId != null) return false;
-        if (item != orderUp.item) return false;
-        if (name != null ? !name.equals(orderUp.name) : orderUp.name != null) return false;
-        if (timestamp != null ? !timestamp.equals(orderUp.timestamp) : orderUp.timestamp != null) return false;
+        if (orderId != null ? !orderId.equals(orderUp.orderId) : orderUp.orderId != null) {
+            return false;
+        }
+        if (lineItemId != null ? !lineItemId.equals(orderUp.lineItemId) : orderUp.lineItemId != null) {
+            return false;
+        }
+        if (item != orderUp.item) {
+            return false;
+        }
+        if (name != null ? !name.equals(orderUp.name) : orderUp.name != null) {
+            return false;
+        }
+        if (timestamp != null ? !timestamp.equals(orderUp.timestamp) : orderUp.timestamp != null) {
+            return false;
+        }
         return madeBy != null ? madeBy.equals(orderUp.madeBy) : orderUp.madeBy == null;
     }
 

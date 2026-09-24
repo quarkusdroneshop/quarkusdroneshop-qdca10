@@ -19,7 +19,7 @@ public class Inventory {
     // バリエーションのため、従来通り QDC_A101 のプールへ合算する。
     private final Map<Item, Integer> stock = new EnumMap<>(Item.class);
 
-    Logger LOGGER = LoggerFactory.getLogger(Inventory.class.getName());
+    static final Logger LOGGER = LoggerFactory.getLogger(Inventory.class.getName());
 
     /*
         QDC_A101 and QDC_A102 are simply tracked as QDC_A101
@@ -55,7 +55,9 @@ public class Inventory {
         Integer itemCount = stock.get(key);
         LOGGER.debug("current inventory for {} is {}", key, itemCount);
 
-        if (itemCount == null || itemCount <= 0) return false;
+        if (itemCount == null || itemCount <= 0) {
+            return false;
+        }
 
         itemCount--;
         stock.put(key, itemCount);

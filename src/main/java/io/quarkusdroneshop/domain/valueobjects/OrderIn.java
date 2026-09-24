@@ -40,15 +40,27 @@ public class OrderIn {
 
     @Override
     public boolean equals(Object o) {
-        if (this == o) return true;
-        if (o == null || getClass() != o.getClass()) return false;
+        if (this == o) {
+            return true;
+        }
+        if (o == null || getClass() != o.getClass()) {
+            return false;
+        }
 
         OrderIn that = (OrderIn) o;
 
-        if (orderId != null ? !orderId.equals(that.orderId) : that.orderId != null) return false;
-        if (lineItemId != null ? !lineItemId.equals(that.lineItemId) : that.lineItemId != null) return false;
-        if (item != that.item) return false;
-        if (name != null ? !name.equals(that.name) : that.name != null) return false;
+        if (orderId != null ? !orderId.equals(that.orderId) : that.orderId != null) {
+            return false;
+        }
+        if (lineItemId != null ? !lineItemId.equals(that.lineItemId) : that.lineItemId != null) {
+            return false;
+        }
+        if (item != that.item) {
+            return false;
+        }
+        if (name != null ? !name.equals(that.name) : that.name != null) {
+            return false;
+        }
         return timestamp != null ? timestamp.equals(that.timestamp) : that.timestamp == null;
     }
 

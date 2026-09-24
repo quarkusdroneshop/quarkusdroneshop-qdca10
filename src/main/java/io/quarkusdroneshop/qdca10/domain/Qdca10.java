@@ -7,7 +7,6 @@ import io.quarkusdroneshop.domain.valueobjects.OrderUp;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-import jakarta.annotation.PostConstruct;
 import jakarta.enterprise.context.ApplicationScoped;
 import jakarta.inject.Inject;
 import java.io.IOException;
@@ -18,30 +17,20 @@ import java.util.UUID;
 @ApplicationScoped
 public class Qdca10 {
 
-    static final Logger logger = LoggerFactory.getLogger(Qdca10.class);
+    static final Logger LOGGER = LoggerFactory.getLogger(Qdca10.class);
     @Inject
     Inventory inventory;
-    //private String madeBy;
-
-    // @PostConstruct
-    // void setHostName() {
-    //     try {
-    //         madeBy = InetAddress.getLocalHost().getHostName() + "-" + UUID.randomUUID().toString().replace("-", "").substring(0, 16);
-    //     } catch (IOException e) {
-    //         logger.debug("unable to get hostname");
-    //         madeBy = "unknown";
-    //     }
-    // }
 
     public Qdca10Result make(final OrderIn orderIn) {
 
-        logger.debug("making: {}" + orderIn.getItem());
+        LOGGER.debug("making: {}" + orderIn.getItem());
 
-        String madeBy;  
+        String madeBy;
         try {
-            madeBy = InetAddress.getLocalHost().getHostName() + "-" + UUID.randomUUID().toString().replace("-", "").substring(0, 16);
+            madeBy = InetAddress.getLocalHost().getHostName() + "-"
+                    + UUID.randomUUID().toString().replace("-", "").substring(0, 16);
         } catch (IOException e) {
-            logger.debug("unable to get hostname");
+            LOGGER.debug("unable to get hostname");
             madeBy = "unknown";
         }
 
@@ -94,7 +83,6 @@ public class Qdca10 {
                 delay = 10000;
                 break;
         }
-        ;
         return delay;
     }
 
